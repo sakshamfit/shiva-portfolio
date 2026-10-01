@@ -16,7 +16,7 @@ const LEAD = 13.2;
 const LINES = [
   ["SIVA", "h1"],
   ["Drone Photographer & Aerial Cinematographer — Gorakhpur, Uttar Pradesh", "meta"],
-  ["Email hello@sivaaerial.in  ·  Phone to be added  ·  Instagram / Facebook / YouTube to be linked", "meta"],
+  ["chauhanomveer460@gmail.com  ·  +91 80093 69410  ·  Instagram / YouTube @gkp_drone", "meta"],
   ["", "gap"],
   ["PROFILE", "h2"],
   ["Drone photographer and camera specialist working across eastern Uttar Pradesh and Bihar. Aerial", "body"],
