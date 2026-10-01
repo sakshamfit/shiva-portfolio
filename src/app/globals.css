@@ -834,7 +834,7 @@ html.cursor-visible .smooth-cursor-ring {
   opacity: 1;
 }
 
-/* over dark surfaces (menu, crane scene, footer) the cursor turns white */
+/* over dark surfaces (menu, photo scene, footer) the cursor turns white */
 html.cursor-on-dark .smooth-cursor-dot {
   background: #fff;
   box-shadow: 0 0 0 2px rgb(11 61 145 / 0.45);
@@ -862,8 +862,8 @@ html.lenis {
   scroll-behavior: auto !important;
 }
 
-/* the crane load waits for JS to arm its entrance (fail-safe: shown after 3s) */
-.js .crane-load:not([data-ready]) {
+/* the hanging print waits for JS to arm its entrance (fail-safe: shown after 3s) */
+.js .print-load:not([data-ready]) {
   visibility: hidden;
   animation: show-failsafe 1ms linear 3s forwards;
 }

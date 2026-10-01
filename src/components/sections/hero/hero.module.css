@@ -25,28 +25,6 @@
   }
 }
 
-.layer {
-  position: absolute;
-  left: 50%;
-  width: var(--layer-w);
-  margin-left: calc(var(--layer-w) / -2);
-  will-change: transform;
-}
-
-.layerIn {
-  animation: layer-in 1.25s var(--ease-out-expo) 0.08s both;
-}
-
-@keyframes layer-in {
-  from {
-    opacity: 0;
-    transform: translate3d(0, var(--from), 0) scale(1.015);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
 
 /* the sky starts part-visible, so the very first frame already paints the landing (a first contentful
    paint for browsers and search engines), then brightens fully into place */

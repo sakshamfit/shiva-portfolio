@@ -10,7 +10,7 @@ import { whyChooseMe as w } from "@/content/about";
 import { site } from "@/content/site";
 import { CountUp } from "@/components/motion/CountUp";
 import { cn } from "@/lib/utils";
-import { DropContainer } from "./DropContainer";
+import { PrintPhoto } from "./PrintPhoto";
 import styles from "./why.module.css";
 
 const v = (vars: Record<string, string>) => vars as CSSProperties;
@@ -69,7 +69,7 @@ export function WhyChooseMe() {
         </p>
 
         {/* the print, lowered on its cables */}
-        <DropContainer className={styles.load} />
+        <PrintPhoto className={styles.load} />
 
         {/* WHY / CHOOSE / ME? rise as the print settles */}
         <div className={styles.why} aria-hidden>

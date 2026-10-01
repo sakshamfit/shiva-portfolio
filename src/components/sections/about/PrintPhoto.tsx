@@ -6,12 +6,12 @@ import { animate, motion, useInView, useMotionValue, useReducedMotion } from "mo
 import styles from "./why.module.css";
 
 /**
- * "Why choose me?": the cables reveal downward (700ms, 100ms delay), the print is lowered
+ * "Why choose me?": a framed print hangs on three cables: they reveal downward (700ms, 100ms delay), the print is lowered
  * from 22% of its height above its resting place (1250ms, opacity 0.7 to 1, 220ms delay),
  * then settles with a 3px damped dip (420ms, no elastic bounce).
  * Without JavaScript, or with reduced motion, it simply hangs in its final position.
  */
-export function DropContainer({ className }: { className?: string }) {
+export function PrintPhoto({ className }: { className?: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const loadRef = useRef<HTMLDivElement>(null);
   const armed = useRef(false);
@@ -47,9 +47,9 @@ export function DropContainer({ className }: { className?: string }) {
 
   return (
     <div ref={rootRef} className={className} aria-hidden>
-      <motion.div ref={loadRef} className="crane-load relative will-change-transform" style={{ y: drop, opacity }}>
+      <motion.div ref={loadRef} className="print-load relative will-change-transform" style={{ y: drop, opacity }}>
         <motion.div className="relative" style={{ y: settle }}>
-          {/* hoist cables running up out of the frame to the hook block */}
+          {/* the cables the print hangs from, running up out of the frame */}
           <motion.div className={styles.cables} style={{ clipPath: cable }}>
             <span />
             <span />

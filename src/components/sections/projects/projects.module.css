@@ -25,11 +25,6 @@
   }
 }
 
-.craneGroup {
-  position: absolute;
-  inset: 0;
-  transform-origin: 0% 40%;
-}
 
 .sceneShade {
   position: absolute;
@@ -320,9 +315,6 @@
 }
 
 /* grid items leaving/entering when a filter changes: short crossfade */
-.cardIn {
-  animation: card-in 320ms var(--ease-out-expo) both;
-}
 
 @keyframes card-in {
   from {
@@ -331,8 +323,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cardIn {
-    animation: none;
-  }
-}

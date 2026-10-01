@@ -7,13 +7,6 @@
   mask-image: radial-gradient(115% 100% at 50% 50%, #000 62%, transparent 98%);
 }
 
-.country {
-  fill: #145fe5;
-  fill-opacity: 0.22;
-  stroke: #145fe5;
-  stroke-opacity: 0.35;
-  stroke-width: 0.8;
-}
 
 .arc {
   fill: none;
