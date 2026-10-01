@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = join(root, "public/resume");
-const outFile = "Siva-Drone-Photographer-CV.pdf";
+const outFile = "Shiva-Drone-Photographer-CV.pdf";
 
 const PAGE = { w: 595.28, h: 841.89 }; // A4
 const MARGIN = 48;
@@ -14,7 +14,7 @@ const LEAD = 13.2;
 
 /** [text, style] where style: h1 | h2 | body | meta */
 const LINES = [
-  ["SIVA", "h1"],
+  ["SHIVA", "h1"],
   ["Drone Photographer & Aerial Cinematographer — Gorakhpur, Uttar Pradesh", "meta"],
   ["chauhanomveer460@gmail.com  ·  +91 80093 69410  ·  Instagram / YouTube @gkp_drone", "meta"],
   ["", "gap"],
@@ -88,7 +88,7 @@ for (const [text, style] of LINES) {
 }
 
 parts.push(`0.6 0.65 0.72 RG 0.8 w ${MARGIN} 40 m ${PAGE.w - MARGIN} 40 l S`);
-parts.push(`BT /F1 8 Tf 1 0 0 1 ${MARGIN} 30 Tm 0.4 0.45 0.52 rg (Siva — drone photographer, Gorakhpur, Uttar Pradesh. Portfolio PDF, updated October 2026.) Tj ET`);
+parts.push(`BT /F1 8 Tf 1 0 0 1 ${MARGIN} 30 Tm 0.4 0.45 0.52 rg (Shiva — drone photographer, Gorakhpur, Uttar Pradesh. Portfolio PDF, updated October 2026.) Tj ET`);
 
 const content = parts.join("\n");
 const objects = [

@@ -31,7 +31,6 @@ const socialIcons: Record<SocialId, typeof InstagramLogo> = {
 
 const nav = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "Experience", href: "/experience" },
   { label: "Projects", href: "/projects" },
   { label: "Skills", href: "/skills" },
@@ -51,7 +50,7 @@ export function SiteFooter() {
           <div className="relative order-2 w-full max-w-[15rem] justify-self-center md:col-span-6 md:max-w-[19rem] lg:order-1 lg:col-span-3" data-reveal="rise">
             <Image
               src="/images/portraits/shirt.webp"
-              alt="Siva in a light button-down shirt, holding a drone controller"
+              alt="Shiva in a light button-down shirt, holding a drone controller"
               width={565}
               height={1681}
               sizes="(min-width: 768px) 19rem, 45vw"

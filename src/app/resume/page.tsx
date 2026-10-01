@@ -3,7 +3,7 @@ import { ResumeSection } from "@/components/sections/resume/ResumeSection";
 
 export const metadata: Metadata = {
   title: "Resume",
-  description: "Download Siva's profile: drone photographer and camera specialist, Gorakhpur (PDF, 1 page).",
+  description: "Download Shiva's profile: drone photographer and camera specialist, Gorakhpur (PDF, 1 page).",
 };
 
 export default function ResumePage() {

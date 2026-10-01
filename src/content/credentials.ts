@@ -1,7 +1,7 @@
 /**
  * Certificates and languages.
  *
- * TODO: replace with Siva's real certificates (numbers, issuers and dates) before launch.
+ * TODO: replace with Shiva's real certificates (numbers, issuers and dates) before launch.
  */
 
 export const certifications = [

@@ -3,13 +3,6 @@
 import { getLenis } from "@/components/motion/SmoothScroll";
 import { prefersReducedMotion } from "@/lib/utils";
 
-/** Asks the header to open the full-screen menu (used by the landing screen's Explore button). */
-export const SITE_MENU_EVENT = "site-menu:open";
-
-export function openSiteMenu() {
-  window.dispatchEvent(new Event(SITE_MENU_EVENT));
-}
-
 /** Moves keyboard focus to a section's heading without scrolling. */
 export function focusSection(id: string) {
   const target = document.getElementById(id.replace(/^#/, ""));

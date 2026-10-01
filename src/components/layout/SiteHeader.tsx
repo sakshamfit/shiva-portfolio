@@ -6,7 +6,6 @@ import { DownloadSimple } from "@phosphor-icons/react/dist/ssr/DownloadSimple";
 import { pageLinks, site } from "@/content/site";
 import { TransitionLink } from "./TransitionLink";
 import type { MenuOverlayProps } from "./MenuOverlay";
-import { SITE_MENU_EVENT } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 // The full-screen menu (and the animation library it uses) stays out of the first load. It is fetched once the
@@ -28,7 +27,7 @@ const loadMenu = () =>
 type HeaderTheme = "light" | "dark";
 
 /** Pages whose first screen is dark (so the bar starts in its light-on-dark state). */
-const darkStart = (path: string) => path === "/" || path === "/projects";
+const darkStart = (path: string) => path === "/projects";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -78,7 +77,7 @@ export function SiteHeader() {
     );
   }, []);
 
-  // load the menu as soon as the page has settled: on the landing screen it is the way in
+  // load the menu as soon as the page has settled, so opening it never waits on a download
   useEffect(() => {
     if (typeof window.requestIdleCallback === "function") {
       const id = window.requestIdleCallback(ensureMenu, { timeout: 1500 });
@@ -88,16 +87,6 @@ export function SiteHeader() {
     return () => window.clearTimeout(t);
   }, [ensureMenu]);
 
-  // the landing screen's Explore button opens the same menu
-  useEffect(() => {
-    const onOpen = () => {
-      ensureMenu();
-      setOpen(true);
-    };
-    window.addEventListener(SITE_MENU_EVENT, onOpen);
-    return () => window.removeEventListener(SITE_MENU_EVENT, onOpen);
-  }, [ensureMenu]);
-
   const close = useCallback((restoreFocus = true) => {
     setOpen(false);
     if (restoreFocus) requestAnimationFrame(() => buttonRef.current?.focus({ preventScroll: true }));
@@ -105,8 +94,6 @@ export function SiteHeader() {
 
   const dark = theme === "dark";
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
-  // the landing screen keeps only the name and the menu: the menu is the way into the pages
-  const landing = pathname === "/";
 
   return (
     <>
@@ -133,7 +120,7 @@ export function SiteHeader() {
             {site.name}
           </TransitionLink>
 
-          <nav aria-label="Main" className={cn("hidden", !landing && "xl:block")}>
+          <nav aria-label="Main" className="hidden xl:block">
             <ul className="flex items-center gap-1">
               {pageLinks.map((l) => {
                 const active = isActive(l.href);
@@ -174,8 +161,7 @@ export function SiteHeader() {
               href="/resume"
               aria-current={isActive("/resume") ? "page" : undefined}
               className={cn(
-                "hidden h-11 items-center gap-2 rounded-full border px-4 text-[0.84rem] font-semibold transition-colors duration-300",
-                !landing && "sm:inline-flex",
+                "inline-flex h-11 items-center gap-2 rounded-full border px-4 text-[0.84rem] font-semibold transition-colors duration-300",
                 dark
                   ? "border-white/30 text-white hover:bg-white hover:text-navy-950"
                   : "border-line bg-white/70 text-ink hover:border-blue hover:text-blue",

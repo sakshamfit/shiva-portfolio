@@ -525,3 +525,468 @@
     display: inline;
   }
 }
+
+/* ===========================================================================
+   The field deck — the right-hand half of the stage.
+   Two pinned sheets: what a booking produces (the tall one, in the column
+   beside the standing portrait) and the readouts of the last flight (the wide
+   one, in the band under the upper-right photograph). Both sit clear of the
+   stage's own callouts, and every size inside them is taken from the stage's
+   container width (cqi), so the composition keeps its proportions as it scales.
+   Below 1100px the same two sheets stack in the reading flow under the portrait.
+   ========================================================================= */
+
+.deck {
+  display: grid;
+  gap: 1.1rem;
+  padding-top: 0.3rem;
+}
+
+/* ---------- the pinned sheet */
+.deckSheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.4rem 1rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-panel);
+  background: linear-gradient(180deg, #fff 62%, var(--color-mist));
+  box-shadow: var(--shadow-soft);
+  rotate: -0.35deg;
+}
+
+/* a binder clip holds the sheet — artwork from sakshamfit/prince-portfolio */
+.clip {
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  translate: -50% 0;
+  display: block;
+  width: 2.6rem;
+  rotate: 2deg;
+  pointer-events: none;
+  filter: drop-shadow(2px 5px 5px rgb(6 26 63 / 0.22));
+}
+
+.clip img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.deckLabel {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 620;
+  color: var(--color-blue);
+}
+
+.deckTitle {
+  font-size: 0.98rem;
+  line-height: 1.18;
+  font-weight: 660;
+  letter-spacing: -0.015em;
+  color: var(--color-ink);
+}
+
+.serviceList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border-top: 1px solid var(--color-line-soft);
+  padding-top: 0.65rem;
+}
+
+.service {
+  display: grid;
+  grid-template-columns: 1.45rem 1fr;
+  column-gap: 0.5rem;
+  align-items: start;
+}
+
+.serviceIcon {
+  display: grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: #fff;
+  color: var(--color-navy);
+}
+
+.serviceTitle {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 640;
+  letter-spacing: -0.008em;
+  color: var(--color-ink);
+}
+
+.serviceText {
+  display: block;
+  margin-top: 0.05rem;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: var(--color-muted);
+}
+
+/* ---------- the amber note at the foot of the sheet */
+.note {
+  position: relative;
+  margin-top: 0.3rem;
+  padding: 0.6rem 0.65rem 0.65rem;
+  background: var(--color-series-2);
+  color: #241a02;
+  border-radius: 2px;
+  rotate: -0.7deg;
+  box-shadow: 3px 5px 12px rgb(6 26 63 / 0.14);
+}
+
+/* a curled corner, so the note reads as paper and not a badge */
+.note::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  background: linear-gradient(135deg, transparent 49%, rgb(255 255 255 / 0.5) 50%);
+}
+
+.noteHand {
+  font-family: var(--font-hand), ui-rounded, cursive;
+  font-size: 1.05rem;
+  line-height: 1.08;
+}
+
+.noteFine {
+  margin-top: 0.25rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 620;
+  opacity: 0.76;
+}
+
+/* ---------- the flight instrument panel */
+.hud {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgb(11 61 145 / 0.3);
+  border-radius: var(--radius-panel);
+  background: var(--color-navy-950);
+  color: #fff;
+  box-shadow: var(--shadow-lift);
+  rotate: 0.45deg;
+}
+
+/* the faint cutting grid the studio's sheets are drawn on */
+.hud::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.055) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.hud > * {
+  position: relative;
+}
+
+.hudTop {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 640;
+  color: rgb(255 255 255 / 0.72);
+}
+
+.recDot {
+  flex: none;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 999px;
+  background: var(--color-orange);
+}
+
+.hudRec {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+  color: var(--color-blue-300);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(.js) .recDot {
+    animation: hudRec 2.6s var(--ease-in-out-soft) infinite;
+  }
+}
+
+@keyframes hudRec {
+  0%,
+  56% {
+    opacity: 1;
+  }
+  72%,
+  100% {
+    opacity: 0.22;
+  }
+}
+
+.gauge {
+  display: block;
+  width: 2.9rem;
+  height: 2.9rem;
+}
+
+/* the horizon banks a couple of degrees; decoration, so it stops with motion */
+@media (prefers-reduced-motion: no-preference) {
+  :global(.js) .gaugeSway {
+    animation: hudSway 11s ease-in-out infinite;
+    transform-origin: 32px 32px;
+  }
+}
+
+@keyframes hudSway {
+  0%,
+  100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(-3deg);
+  }
+}
+
+.readouts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.2rem 0.55rem;
+}
+
+.readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.3rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  padding-bottom: 0.1rem;
+}
+
+.readouts dt {
+  font-size: 0.54rem;
+  letter-spacing: 0.14em;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.readouts dd {
+  font-size: 0.72rem;
+  font-weight: 640;
+  font-variant-numeric: tabular-nums;
+}
+
+.readoutUnit {
+  margin-left: 0.08rem;
+  font-size: 0.54rem;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1.5px;
+}
+
+.bar {
+  display: block;
+  width: 2px;
+  border-radius: 1px;
+  background: rgb(255 255 255 / 0.2);
+}
+
+.barOn {
+  background: var(--color-blue-300);
+}
+
+.hudSignals {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.28rem;
+  flex: none;
+}
+
+.hudCaption {
+  grid-column: 1 / -1;
+  font-size: 0.62rem;
+  line-height: 1.3;
+  color: rgb(255 255 255 / 0.6);
+}
+
+/* a pencil left along the panel's corner */
+.pencil {
+  position: absolute;
+  left: -0.45rem;
+  bottom: -0.55rem;
+  display: block;
+  width: 2.1rem;
+  rotate: 14deg;
+  pointer-events: none;
+  filter: drop-shadow(2px 4px 5px rgb(0 0 0 / 0.35));
+}
+
+.pencil img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 48rem) {
+  .deck {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+/* ===========================================================================
+   Wide screens: the two sheets join the composed stage
+   ========================================================================= */
+@media (min-width: 68.75rem) {
+  .deck {
+    display: contents;
+  }
+
+  /* the tall sheet: the stage's right column, from under the top callout to
+     above "Plan" (which sits at 69%) */
+  .deckSheet {
+    position: absolute;
+    top: 31.8%;
+    left: 84.2%;
+    width: 12.2%;
+    gap: 0.6cqi;
+    padding: 1.6cqi 1.2cqi 1.25cqi;
+    border-radius: 0.8cqi;
+  }
+
+  .clip {
+    top: -1.25cqi;
+    width: 4cqi;
+  }
+
+  .deckLabel {
+    font-size: clamp(0.48rem, 0.6cqi, 0.66rem);
+  }
+
+  .deckTitle {
+    font-size: clamp(0.86rem, 1.16cqi, 1.26rem);
+  }
+
+  .serviceList {
+    gap: 0.6cqi;
+    padding-top: 0.85cqi;
+  }
+
+  .service {
+    grid-template-columns: 2cqi 1fr;
+    column-gap: 0.55cqi;
+  }
+
+  .serviceIcon {
+    width: 2cqi;
+    height: 2cqi;
+  }
+
+  .serviceIcon svg {
+    width: clamp(0.62rem, 0.92cqi, 0.98rem);
+    height: clamp(0.62rem, 0.92cqi, 0.98rem);
+  }
+
+  .serviceTitle {
+    font-size: clamp(0.64rem, 0.88cqi, 0.94rem);
+  }
+
+  .serviceText {
+    font-size: clamp(0.54rem, 0.76cqi, 0.82rem);
+  }
+
+  .note {
+    margin-top: 0.45cqi;
+    padding: 0.7cqi 0.75cqi 0.75cqi;
+  }
+
+  .noteHand {
+    font-size: clamp(0.78rem, 1.1cqi, 1.3rem);
+  }
+
+  .noteFine {
+    margin-top: 0.3cqi;
+    font-size: clamp(0.42rem, 0.54cqi, 0.6rem);
+  }
+
+  /* the instrument panel: the band under the upper-right photograph, above the
+     lower-right one (which starts at 58.4%) */
+  .hud {
+    position: absolute;
+    top: 45.9%;
+    left: 76.4%;
+    width: 20%;
+    gap: 0.55cqi 0.9cqi;
+    padding: 0.9cqi 1cqi;
+    border-radius: 0.8cqi;
+  }
+
+  .hudTop {
+    gap: 0.6cqi;
+    font-size: clamp(0.42rem, 0.52cqi, 0.58rem);
+  }
+
+  .recDot {
+    width: 0.55cqi;
+    height: 0.55cqi;
+  }
+
+  .gauge {
+    width: 4.6cqi;
+    height: 4.6cqi;
+  }
+
+  .readouts {
+    gap: 0.35cqi 1cqi;
+  }
+
+  .readouts dt {
+    font-size: clamp(0.4rem, 0.5cqi, 0.56rem);
+  }
+
+  .readouts dd {
+    font-size: clamp(0.58rem, 0.78cqi, 0.86rem);
+  }
+
+  .readoutUnit {
+    font-size: clamp(0.4rem, 0.5cqi, 0.56rem);
+  }
+
+  .hudCaption {
+    font-size: clamp(0.46rem, 0.58cqi, 0.65rem);
+  }
+
+  .pencil {
+    width: 3cqi;
+    left: -1.1cqi;
+    bottom: -0.75cqi;
+  }
+}

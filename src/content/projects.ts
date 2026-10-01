@@ -1,8 +1,8 @@
 /**
- * Case studies for Siva's photography and studio work.
+ * Case studies for Shiva's photography and studio work.
  *
  * Framing copy (challenge, objective, relevance) describes how each job is run; the numbers
- * are the studio's own placeholders — TODO: check them against Siva's real records.
+ * are the studio's own placeholders — TODO: check them against Shiva's real records.
  *
  * Interactive figures used in the case pages live in /src/content/demo and are always
  * labelled on screen as demonstration data.

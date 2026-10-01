@@ -39,7 +39,7 @@ const withoutAntarctica = {
 };
 const W = 1000;
 const H = 470;
-// The control-room map covers the region Siva actually flies in (India and its neighbours),
+// The control-room map covers the region Shiva actually flies in (India and its neighbours),
 // so the cities in the demonstration data are legible instead of a cluster of dots.
 const regionPolygon = (west, south, east, north) => ({
   type: "Feature",
@@ -94,7 +94,7 @@ const portXY = Object.fromEntries(Object.entries(ports).map(([k, ll]) => [k, wor
 
 // ---------- 2. Training journey (Gorakhpur -> training city), higher-detail 50m land
 const gorakhpur = [83.3732, 26.7606];
-const training = [77.209, 28.6139]; // TODO: the city Siva actually trained in
+const training = [77.209, 28.6139]; // TODO: the city Shiva actually trained in
 const JW = 1000;
 const JH = 560;
 const journeyRegion = regionPolygon(66, 5, 99, 37);

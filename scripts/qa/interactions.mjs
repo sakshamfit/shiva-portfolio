@@ -9,7 +9,7 @@ const base = (process.argv.includes("--url") ? process.argv[process.argv.indexOf
 const results = [];
 const check = (name, ok, detail = "") => results.push({ ok: Boolean(ok), name, detail: String(detail) });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const pages = ["/", "/about", "/experience", "/projects", "/projects/control-tower", "/projects/novexai", "/projects/inventory-optimization", "/projects/supplier-risk", "/skills", "/education", "/contact", "/resume"];
+const pages = ["/", "/experience", "/projects", "/projects/control-tower", "/projects/novexai", "/projects/inventory-optimization", "/projects/supplier-risk", "/skills", "/education", "/contact", "/resume"];
 
 const browser = await puppeteer.launch({
   executablePath: chromePath,
@@ -57,7 +57,7 @@ try {
   check("landing: Explore opens the full-screen menu", explore, explore);
   await page.keyboard.press("Escape");
   await sleep(800);
-  await page.goto(base + "/about", { waitUntil: "networkidle2" });
+  await page.goto(base + "/", { waitUntil: "networkidle2" });
   await sleep(800);
   await page.click('header nav a[href="/projects"]');
   await page.waitForFunction(() => location.pathname === "/projects", { timeout: 8000 });
@@ -73,7 +73,7 @@ try {
   check("focus moves to the new page's heading", nav1.focused === "H1", nav1.focused);
 
   // ---------------------------------------------------------------- back restores scroll
-  await page.goto(base + "/about", { waitUntil: "networkidle2" });
+  await page.goto(base + "/", { waitUntil: "networkidle2" });
   await sleep(500);
   await page.evaluate(() => window.scrollTo(0, 1400));
   await sleep(700);
@@ -82,7 +82,7 @@ try {
   await page.waitForFunction(() => location.pathname === "/experience", { timeout: 8000 });
   await sleep(800);
   await page.goBack();
-  await page.waitForFunction(() => location.pathname === "/about", { timeout: 8000 });
+  await page.waitForFunction(() => location.pathname === "/", { timeout: 8000 });
   await sleep(1000);
   const yAfter = await page.evaluate(() => Math.round(scrollY));
   check("Back returns to the previous scroll position", Math.abs(yAfter - yBefore) < 60, `${yBefore} -> ${yAfter}`);
@@ -210,7 +210,7 @@ try {
   const fc = await filterNow("Forecasting");
   await filterNow("All projects");
   check("projects: the category filter narrows the case studies", all === 4 && auto === 1 && fc === 2, `${all} / ${auto} / ${fc}`);
-  const abt = await imgs("/about");
+  const abt = await imgs("/");
   const why = await page.evaluate(() => document.getElementById("why-title")?.textContent.trim());
   check("about: Why choose me? with the blue container and its backdrop", why === "Why choose me?" && has(abt, "container-blue") && has(abt, "why-sky"), why);
   const sup = await imgs("/projects/supplier-risk");
@@ -413,7 +413,7 @@ try {
   check("mobile NovexAI: the demo-data label is shown", demoNote);
 
   // about: the "Why choose me?" numbers count up promptly once scrolled in (no long desktop wait)
-  await m.goto(base + "/about", { waitUntil: "networkidle2" });
+  await m.goto(base + "/", { waitUntil: "networkidle2" });
   await m.evaluate(() => document.querySelector("#why-choose-me dl").scrollIntoView({ block: "center" }));
   await sleep(2200);
   const firstStat = await m.evaluate(() => document.querySelector("#why-choose-me dl dd")?.textContent.trim());
@@ -448,7 +448,7 @@ try {
   // tablet: the footer keeps its open container
   const tab = await browser.newPage();
   await tab.setViewport({ width: 768, height: 1024, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
-  await tab.goto(base + "/about", { waitUntil: "networkidle2" });
+  await tab.goto(base + "/", { waitUntil: "networkidle2" });
   const tabContainer = await tab.evaluate(() => { const img = document.querySelector('footer img[src*="open-container"]'); return !!img && img.getBoundingClientRect().width > 100; });
   check("tablet: the footer shows the open container", tabContainer);
   await tab.close();
