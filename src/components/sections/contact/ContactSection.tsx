@@ -17,15 +17,6 @@ const socialIcons = {
   whatsapp: WhatsappLogo,
 } as const;
 
-const socialLabels = {
-  instagram: "Instagram",
-  facebook: "Facebook",
-  youtube: "YouTube",
-  whatsapp: "WhatsApp",
-} as const;
-
-/* TODO: paste the profile URLs into `socials` in /src/content/site.ts — they render as
-   "link coming soon" here until then, so nothing ever points at the wrong profile. */
 type Detail = {
   Icon: typeof EnvelopeSimple;
   label: string;
@@ -41,13 +32,11 @@ const details: Detail[] = [
   ...socials.map((s) => ({
     Icon: socialIcons[s.id as keyof typeof socialIcons] as typeof EnvelopeSimple,
     label: s.label,
-    value: s.href || LINK_PENDING,
+    value: s.href ? (s.handle ?? s.href) : LINK_PENDING,
     href: s.href || undefined,
     external: Boolean(s.href),
   })),
 ];
-
-const socialNames = Object.values(socialLabels).join(", ");
 
 export function ContactSection() {
   return (
@@ -116,8 +105,7 @@ export function ContactSection() {
               ))}
             </ul>
             <p className="mt-6 max-w-[26rem] text-[0.86rem] leading-relaxed text-muted">
-              {socialNames} profiles are on the way — the links are added as soon as the pages are live. Until then,
-              email or the form below reach me directly.
+              Fastest reply: call or message on WhatsApp. Email or the form below also reach me directly.
             </p>
           </div>
 

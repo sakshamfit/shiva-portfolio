@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
     deviceSizes: [390, 640, 828, 1080, 1280, 1600, 1920, 2400, 2880],
     imageSizes: [64, 128, 192, 256, 384],
   },
+  async headers() {
+    return [
+      {
+        // the worker file itself must always be re-checked so updates reach returning visitors
+        source: "/sw.js",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+          { key: "Service-Worker-Allowed", value: "/" },
+        ],
+      },
+    ];
+  },
   experimental: {
     optimizePackageImports: ["@phosphor-icons/react"],
   },

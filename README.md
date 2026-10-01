@@ -45,12 +45,30 @@ Typed content lives under `src/content/` (`site.ts`, `about.ts`, `experience.ts`
 `public/resume/`; rebuild it with `node scripts/build-resume.mjs` after editing the text in
 that script.
 
+## Contact details
+
+Siva's email, phone and the Instagram / Facebook / YouTube / WhatsApp links are set in
+`src/content/site.ts` (the footer, the menu and `/contact` all read from there). WhatsApp points
+at the same number as the phone (`wa.me/918009369410`).
+
+## Offline, installable and mobile
+
+- `public/sw.js` is a service worker (registered in production only by
+  `src/components/layout/ServiceWorker.tsx`). Pages are network-first with a 3 s cap, so a slow or
+  missing connection falls back to the saved copy; scripts, fonts and images are served from the
+  device cache. After the first visit it quietly saves every page and the image sizes that screen
+  uses (skipped on Data Saver / 2G, at most once a day). `public/offline.html` is the fallback
+  for a page that was never saved. Bump `V` in `sw.js` to force every device to drop its cache.
+- `src/app/manifest.ts` + `public/icons/*` make the site installable on Android ("Add to Home
+  screen"). Regenerate the icons with `node scripts/build-icons.mjs`.
+- Mouse-only effects (smooth cursor, inertial wheel scrolling) are off on touch devices, which keep
+  native momentum scrolling.
+
+The contact *form* needs a connection to send through the email service; offline it opens the
+visitor's mail app with a pre-filled draft, and the phone, WhatsApp and email links always work.
+
 ### Before launch: replace the placeholders
 
-- `site.ts` — email, phone and the Instagram / Facebook / YouTube / WhatsApp URLs (the footer
-  and contact page show “link coming soon” while an `href` is empty).
 - `site.ts` — `NEXT_PUBLIC_SITE_URL` for metadata and social previews.
 - `experience.ts`, `education.ts`, `credentials.ts` — company names, dates and certificate
   details are written as placeholders.
-- `public/images/portraits/*` — the portrait photographs are AI-generated placeholders; swap
-  in Siva's own pictures, keeping the file names.

@@ -9,6 +9,7 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { SmoothCursor } from "@/components/motion/SmoothCursor";
 import { RouteEffects } from "@/components/layout/RouteEffects";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { ServiceWorker } from "@/components/layout/ServiceWorker";
 import { FooterGate } from "@/components/layout/FooterGate";
 
 const inter = localFont({
@@ -53,6 +54,9 @@ export const metadata: Metadata = {
     images: ["/images/ui/og.jpg"],
   },
   robots: { index: true, follow: true },
+  applicationName: site.name,
+  formatDetection: { telephone: true, email: true },
+  appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {
@@ -68,6 +72,7 @@ const personJsonLd = {
   name: site.name,
   jobTitle: site.role,
   email: `mailto:${site.email}`,
+  telephone: site.phone.display,
   address: { "@type": "PostalAddress", addressLocality: "Gorakhpur", addressRegion: "Uttar Pradesh", addressCountry: "IN" },
   // TODO: add the training school's name once it is confirmed in /src/content/education.ts
   sameAs: socials.map((s) => s.href).filter(Boolean),
@@ -110,6 +115,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SmoothCursor />
         <RouteEffects />
         <RevealObserver />
+        <ServiceWorker />
       </body>
     </html>
   );

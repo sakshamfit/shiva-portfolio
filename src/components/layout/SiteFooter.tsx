@@ -4,6 +4,7 @@ import { InstagramLogo } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 import { FacebookLogo } from "@phosphor-icons/react/dist/ssr/FacebookLogo";
 import { YoutubeLogo } from "@phosphor-icons/react/dist/ssr/YoutubeLogo";
 import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr/WhatsappLogo";
+import { Phone } from "@phosphor-icons/react/dist/ssr/Phone";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import { ArrowUp } from "@phosphor-icons/react/dist/ssr/ArrowUp";
 import { DownloadSimple } from "@phosphor-icons/react/dist/ssr/DownloadSimple";
@@ -74,6 +75,10 @@ export function SiteFooter() {
                 <EnvelopeSimple size={18} weight="bold" aria-hidden />
                 Email {site.name}
                 <ArrowRight size={16} weight="bold" className="btn-arrow" aria-hidden />
+              </a>
+              <a href={site.phone.href} className="btn btn-secondary">
+                <Phone size={18} weight="bold" aria-hidden />
+                Call {site.phone.display}
               </a>
               <a href={resume.href} download={resume.fileName} className="btn btn-secondary">
                 <DownloadSimple size={18} weight="bold" aria-hidden />
@@ -162,6 +167,13 @@ export function SiteFooter() {
                   </a>
                 );
               })}
+              <a
+                href={site.phone.href}
+                className="grid size-12 place-items-center rounded-full border border-white/20 transition-colors hover:border-white hover:bg-white hover:text-navy-950"
+                aria-label={`Call ${site.phone.display}`}
+              >
+                <Phone size={22} weight="bold" aria-hidden />
+              </a>
               <a
                 href={`mailto:${site.email}`}
                 className="grid size-12 place-items-center rounded-full border border-white/20 transition-colors hover:border-white hover:bg-white hover:text-navy-950"

@@ -1,11 +1,8 @@
 /**
  * Identity, contact details, social links and navigation for Siva.
  *
- * TODO (placeholders to replace with Siva's real details):
- *  - email + phone below
- *  - the four social links in `socials` (paste the profile URLs; the footer shows them
- *    as "link coming soon" until a URL is set, so nothing links to the wrong page)
- *  - the site URL in NEXT_PUBLIC_SITE_URL / `site.url`
+ * TODO: set the site URL in NEXT_PUBLIC_SITE_URL / `site.url` once the domain is live.
+ * A social with an empty `href` is shown as "link coming soon" rather than linking elsewhere.
  */
 
 export const site = {
@@ -14,11 +11,12 @@ export const site = {
   role: "Drone Photographer & Aerial Cinematographer",
   specialism: "Aerial Films, Aerial Stills & Camera Craft",
   location: "Gorakhpur, Uttar Pradesh, India",
-  email: "hello@sivaaerial.in",
+  email: "chauhanomveer460@gmail.com",
   phone: {
-    // TODO: put Siva's real number here; the contact page hides the phone link while this is empty.
-    display: "Add phone number",
-    href: "",
+    display: "+91 80093 69410",
+    href: "tel:+918009369410",
+    /** digits only, country code first: used for wa.me links */
+    e164: "918009369410",
   },
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
@@ -35,15 +33,12 @@ export type Social = {
   handle?: string;
 };
 
-/**
- * Social profiles shown in the footer and on the contact page.
- * TODO: paste each profile URL into `href`.
- */
+/** Social profiles shown in the footer, the menu and the contact page. */
 export const socials: Social[] = [
-  { id: "instagram", label: "Instagram", href: "" },
-  { id: "facebook", label: "Facebook", href: "" },
-  { id: "youtube", label: "YouTube", href: "" },
-  { id: "whatsapp", label: "WhatsApp", href: "" },
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/gkp_drone", handle: "@gkp_drone" },
+  { id: "facebook", label: "Facebook", href: "https://www.facebook.com/share/1BxaxkDfiy/", handle: "Facebook page" },
+  { id: "youtube", label: "YouTube", href: "https://www.youtube.com/@gkp_drone", handle: "@gkp_drone" },
+  { id: "whatsapp", label: "WhatsApp", href: "https://wa.me/918009369410", handle: "+91 80093 69410" },
 ];
 
 export const LINK_PENDING = "Link coming soon";
