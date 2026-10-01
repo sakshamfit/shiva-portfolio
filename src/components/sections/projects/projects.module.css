@@ -1,0 +1,325 @@
+/* ---------------------------------------------------------------------------
+   Crane scene: one 1536 x 864 frame that always covers its box. The frame is
+   sized with container units so the layers stay registered; horizontally it
+   keeps the container (around 46% of the frame) in view on narrow screens.
+   ------------------------------------------------------------------------- */
+.sceneWrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+}
+
+.scene {
+  position: absolute;
+  top: 50%;
+  width: max(100cqw, 177.78cqh);
+  aspect-ratio: 1536 / 864;
+  left: clamp(calc(100cqw - max(100cqw, 177.78cqh)), calc(50cqw - 0.46 * max(100cqw, 177.78cqh)), 0px);
+  translate: 0 -50%;
+}
+
+@media (min-width: 64rem) {
+  .scene {
+    left: 0;
+  }
+}
+
+
+.sceneShade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgb(8 18 38 / 0.55) 0%, transparent 18%),
+    linear-gradient(0deg, #0e1f3b 0%, rgb(14 31 59 / 0) 26%);
+}
+
+@media (min-width: 64rem) {
+  .sceneShade {
+    background:
+      linear-gradient(180deg, rgb(8 18 38 / 0.5) 0%, transparent 16%),
+      linear-gradient(90deg, transparent 50%, rgb(10 24 48 / 0.55) 72%, rgb(10 24 48 / 0.7) 100%),
+      linear-gradient(0deg, rgb(14 31 59 / 0.85) 0%, rgb(14 31 59 / 0) 22%);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Landing layout. Mobile: one column under the scene. Desktop: the reference's
+   placement on a 12-column grid over a one-screen scene.
+   ------------------------------------------------------------------------- */
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "title" "filters" "copy" "metrics" "impact" "crumb";
+  row-gap: 2.25rem;
+  padding-top: 1rem;
+  padding-bottom: 4rem;
+}
+
+.aTitle {
+  grid-area: title;
+}
+.aFilters {
+  grid-area: filters;
+}
+.heroGrid .aDisc {
+  grid-area: disc;
+  display: none;
+}
+.aCopy {
+  grid-area: copy;
+  max-width: 32rem;
+}
+.aImpact {
+  grid-area: impact;
+}
+.aCrumb {
+  grid-area: crumb;
+}
+.aMetrics {
+  grid-area: metrics;
+}
+
+@media (min-width: 64rem) {
+  .heroGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      ". . . . . title title title title title title title"
+      ". . . . . . filters filters filters filters filters filters"
+      "disc disc disc . . . . . copy copy copy copy"
+      "impact impact impact impact impact . metrics metrics metrics metrics metrics metrics"
+      "crumb crumb crumb crumb crumb . metrics metrics metrics metrics metrics metrics";
+    column-gap: 1.5rem;
+    row-gap: 1.25rem;
+    min-height: max(100svh, 50rem);
+    padding-top: calc(var(--header-h) + 1.75rem);
+    padding-bottom: 3rem;
+  }
+  .aFilters {
+    margin-top: 0.5rem;
+  }
+  .heroGrid .aDisc {
+    display: grid;
+    align-self: center;
+  }
+  .aCopy {
+    align-self: center;
+    max-width: none;
+  }
+  .aImpact {
+    align-self: end;
+  }
+  .aMetrics {
+    align-self: end;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Landing copy
+   ------------------------------------------------------------------------- */
+.bigTitle {
+  font-size: clamp(3.9rem, 0.6rem + 11.5vw, 7rem);
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+  font-weight: 820;
+  text-transform: uppercase;
+}
+
+@media (min-width: 64rem) {
+  .bigTitle {
+    font-size: clamp(6rem, 1rem + 8.2vw, 10rem);
+  }
+}
+
+.accent {
+  font-size: clamp(1.3rem, 1rem + 0.9vw, 1.85rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 780;
+  text-transform: uppercase;
+  color: #ff6a2b;
+}
+
+.impact {
+  font-size: clamp(2.2rem, 0.8rem + 3.2vw, 3.9rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 0.25rem;
+  row-gap: 0.25rem;
+}
+
+.filter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: 0.7rem;
+  font-size: 0.74rem;
+  font-weight: 580;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.62);
+  transition: color 200ms var(--ease-out-expo);
+}
+
+.filter:first-child {
+  padding-left: 0;
+}
+
+.filter:focus-visible {
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .filter:hover {
+    color: #fff;
+  }
+}
+
+.filter[aria-pressed="true"] {
+  color: #fff;
+}
+
+.filter::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.45rem;
+  height: 2px;
+  border-radius: 2px;
+  background: #ff6a2b;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 260ms var(--ease-out-expo);
+}
+
+.filter:first-child::after {
+  left: 0;
+}
+
+.filter[aria-pressed="true"]::after {
+  transform: scaleX(1);
+}
+
+.filterSep {
+  width: 1px;
+  height: 1rem;
+  background: rgb(255 255 255 / 0.2);
+}
+
+/* the same row on white */
+.filtersLight .filter {
+  color: var(--color-muted);
+}
+
+.filtersLight .filter:focus-visible,
+.filtersLight .filter[aria-pressed="true"] {
+  color: var(--color-ink);
+}
+
+@media (hover: hover) {
+  .filtersLight .filter:hover {
+    color: var(--color-ink);
+  }
+}
+
+.filtersLight .filter::after {
+  background: var(--color-blue);
+}
+
+.filtersLight .filterSep {
+  background: var(--color-line);
+}
+
+/* Phones and tablets: one swipeable row edge to edge (the desktop look, never wrapped into ragged lines),
+   fading out on the right to show there is more. */
+@media (max-width: 63.99rem) {
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    -webkit-mask-image: linear-gradient(to left, transparent 0, #000 2.75rem);
+    mask-image: linear-gradient(to left, transparent 0, #000 2.75rem);
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter,
+  .filterSep {
+    flex: none;
+  }
+
+  .filter {
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  /* room to scroll the last option clear of the fade */
+  .filter:last-child {
+    margin-right: 2rem;
+  }
+}
+
+.scrollBtn {
+  display: grid;
+  place-items: center;
+  width: clamp(5.5rem, 4rem + 4vw, 8.5rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #ff5a1f;
+  color: #fff;
+  box-shadow: 0 24px 50px -18px rgb(255 90 31 / 0.6);
+  transition:
+    transform 220ms var(--ease-out-expo),
+    background-color 220ms var(--ease-out-expo);
+}
+
+.scrollBtn:focus-visible {
+  background: #ff6a2b;
+  transform: translateY(2px);
+}
+
+@media (hover: hover) {
+  .scrollBtn:hover {
+    background: #ff6a2b;
+    transform: translateY(2px);
+  }
+}
+
+.scrollBtn svg {
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .scrollBtn:hover svg {
+    transform: translate(2px, 2px);
+  }
+}
+
+/* grid items leaving/entering when a filter changes: short crossfade */
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+

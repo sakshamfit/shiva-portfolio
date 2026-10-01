@@ -1,0 +1,920 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Design tokens
+   One typeface (Inter, variable with optical sizes). Hierarchy comes from
+   size, weight, tracking and colour only.
+   Radius rule: interactive controls and tags are pills; panels are 14px;
+   photographs are square-cornered unless framed.
+   ========================================================================== */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
+
+  --color-canvas: #ffffff;
+  --color-mist: #f5f8fc;
+  --color-cloud: #eef4fb;
+  --color-sky: #dceeff;
+  --color-line: #d8e1ec;
+  --color-line-soft: #e8eef5;
+  --color-ink: #101828;
+  --color-ink-2: #344054;
+  --color-muted: #667085;
+  --color-navy: #0b3d91;
+  --color-navy-900: #061a3f;
+  --color-navy-950: #04112b;
+  --color-blue: #145fe5;
+  --color-blue-700: #0e4dc0;
+  --color-blue-300: #8fb6f5;
+  --color-blue-100: #e3eeff;
+  --color-violet: #5b4bd6;
+  --color-violet-100: #eceafd;
+  --color-orange: #f26a1b;
+
+  /* data-viz slots (validated with the dataviz palette script) */
+  --color-series-1: #145fe5;
+  --color-series-2: #e0930b;
+  --color-series-3: #0e9aa7;
+  --color-status-good: #0ca30c;
+  --color-status-warning: #fab219;
+  --color-status-serious: #ec835a;
+  --color-status-critical: #d03b3b;
+
+  --radius-panel: 14px;
+  --radius-card: 18px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --shadow-soft: 0 1px 2px rgb(16 24 40 / 0.04), 0 10px 30px -12px rgb(11 61 145 / 0.16);
+  --shadow-lift: 0 1px 2px rgb(16 24 40 / 0.05), 0 22px 48px -18px rgb(11 61 145 / 0.28);
+  --shadow-float: 0 30px 60px -28px rgb(6 26 63 / 0.35), 0 12px 24px -12px rgb(6 26 63 / 0.18);
+
+  --breakpoint-xs: 26rem;
+  --breakpoint-3xl: 100rem;
+}
+
+/* ============================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  :root {
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+    --section-y: clamp(5.5rem, 11vw, 10.5rem);
+    --header-h: 4.5rem;
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 1.5rem;
+    background: var(--color-canvas);
+    /* no grey/blue flash box on tap; touch screens get the press below instead */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Touch screens: a brief press on anything tappable (hover styles are for mouse and trackpad only). */
+  @media (hover: none) {
+    :where(a[href], button:not(:disabled), [role="button"], [role="tab"], summary, label[for]):active {
+      opacity: 0.72;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    font-feature-settings: "cv11", "ss03";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-blue);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  [data-surface="dark"] :focus-visible {
+    outline-color: #fff;
+  }
+
+  /* headings receive focus programmatically after in-page navigation; they are not controls */
+  [data-section-heading]:focus,
+  [data-section-heading]:focus-visible {
+    outline: none;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  html.menu-open {
+    overflow: hidden;
+  }
+
+  html.menu-open body {
+    overflow: hidden;
+  }
+}
+
+/* ============================================================================
+   Layout helpers
+   ========================================================================== */
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section-pad {
+    padding-block: var(--section-y);
+  }
+
+  /* faint editorial grid texture; decorative only */
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, rgb(16 24 40 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(16 24 40 / 0.045) 1px, transparent 1px);
+    background-size: 88px 88px;
+    background-position: center top;
+  }
+
+  .grid-texture-dark {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 88px 88px;
+    background-position: center top;
+  }
+
+  /* ---------- type scale (Inter optical sizes switch to the display cut automatically) */
+  .type-hero {
+    font-size: clamp(2.75rem, 1.05rem + 6.1vw, 7rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+    font-weight: 620;
+  }
+
+  .type-display {
+    font-size: clamp(2.6rem, 1.2rem + 4.6vw, 5.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.042em;
+    font-weight: 620;
+  }
+
+  .type-title {
+    font-size: clamp(2rem, 1.15rem + 2.6vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 620;
+  }
+
+  .type-subtitle {
+    font-size: clamp(1.375rem, 1.05rem + 1vw, 1.875rem);
+    line-height: 1.18;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+  }
+
+  .type-lead {
+    font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.3125rem);
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+  }
+
+  .type-body {
+    font-size: 1rem;
+    line-height: 1.65;
+    letter-spacing: -0.006em;
+  }
+
+  .type-small {
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  /* small uppercase label, used sparingly for section markers and metadata */
+  .type-label {
+    font-size: 0.72rem;
+    line-height: 1.3;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 560;
+    font-feature-settings: "case";
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .balance {
+    text-wrap: balance;
+  }
+
+  .pretty {
+    text-wrap: pretty;
+  }
+
+  /* ---------- buttons */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 3rem;
+    padding: 0.8rem 1.35rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 560;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition:
+      background-color 200ms var(--ease-out-expo),
+      color 200ms var(--ease-out-expo),
+      border-color 200ms var(--ease-out-expo),
+      box-shadow 240ms var(--ease-out-expo),
+      transform 200ms var(--ease-out-expo);
+  }
+
+  .btn:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  .btn-primary {
+    background: var(--color-blue);
+    color: #fff;
+    box-shadow: 0 10px 24px -12px rgb(20 95 229 / 0.7);
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background: var(--color-blue-700);
+      box-shadow: 0 14px 30px -12px rgb(20 95 229 / 0.75);
+    }
+  }
+
+  .btn-secondary {
+    background: #fff;
+    color: var(--color-ink);
+    border: 1px solid var(--color-line);
+  }
+
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      border-color: var(--color-blue);
+      color: var(--color-blue);
+    }
+  }
+
+  .btn-on-dark {
+    background: #fff;
+    color: var(--color-navy-950);
+  }
+
+  @media (hover: hover) {
+    .btn-on-dark:hover {
+      background: var(--color-sky);
+    }
+  }
+
+  .btn .btn-arrow {
+    transition: transform 240ms var(--ease-out-expo);
+  }
+
+  .btn:focus-visible .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  @media (hover: hover) {
+    .btn:hover .btn-arrow {
+      transform: translateX(3px);
+    }
+  }
+
+  /* text link with a drawn underline */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 320ms var(--ease-out-expo);
+    padding-bottom: 2px;
+  }
+
+  .link-draw:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  @media (hover: hover) {
+    .link-draw:hover {
+      background-size: 100% 1px;
+    }
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    padding: 0.32rem 0.72rem;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--color-ink-2);
+    white-space: nowrap;
+  }
+
+  .panel {
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--color-line);
+    background: #fff;
+  }
+
+  .hairline {
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  /* touch devices: compact controls grow to a 44 x 44 px hit area */
+  @media (pointer: coarse) {
+    .tap {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  .demo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 999px;
+    padding: 0.22rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 560;
+    letter-spacing: 0.01em;
+    background: var(--color-violet-100);
+    color: #3f32a8;
+    white-space: nowrap;
+  }
+}
+
+/* ============================================================================
+   Reveal system (CSS-first, progressive enhancement)
+   Timings follow the master document's motion table: section reveals 500-750ms
+   rising 14-20px, text reveals 500-700ms, side entrances 24px, line draws
+   450-800ms, all once, eased with cubic-bezier(.16,1,.3,1).
+   Without JavaScript nothing is hidden. With JS, html.js is set before paint,
+   elements start offset and a single IntersectionObserver adds .is-in.
+   Per element: --d (delay), --dur (duration), --rx/--ry (offset), --rs (scale).
+   A fail-safe reveals everything if the observer never starts.
+   ========================================================================== */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(var(--rx, 0px), var(--ry, 18px), 0) scale(var(--rs, 1));
+  transition:
+    opacity var(--dur, 650ms) var(--ease-out-expo),
+    transform var(--dur, 700ms) var(--ease-out-expo);
+  transition-delay: min(calc(var(--d, 0ms) * var(--dk, 1)), var(--dmax, 60s));
+}
+
+.js [data-reveal="fade"] {
+  --ry: 0px;
+}
+
+.js [data-reveal="left"] {
+  --rx: -24px;
+  --ry: 0px;
+}
+
+.js [data-reveal="right"] {
+  --rx: 24px;
+  --ry: 0px;
+}
+
+.js [data-reveal="rise"] {
+  --ry: 24px;
+}
+
+/* from above (elements lowered into place) */
+.js [data-reveal="drop"] {
+  --ry: -16px;
+}
+
+.js [data-reveal="scale"] {
+  --ry: 0px;
+  --rs: 0.97;
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* a group only marks its children's shared moment; it never hides itself */
+.js [data-reveal="group"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* line-by-line headline: each line fades and rises 24px, 100ms apart */
+.reveal-lines .line {
+  display: block;
+}
+
+.reveal-lines .line > span {
+  display: block;
+}
+
+.js .reveal-lines[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+.js .reveal-lines .line > span {
+  opacity: 0;
+  transform: translate3d(var(--lx, 0px), var(--ly, 24px), 0);
+  transition:
+    opacity var(--ldur, 750ms) var(--ease-out-expo),
+    transform var(--ldur, 750ms) var(--ease-out-expo);
+  transition-delay: calc(min(calc(var(--d, 0ms) * var(--dk, 1)), var(--dmax, 60s)) + var(--i, 0) * 100ms);
+}
+
+.js .reveal-lines.is-in .line > span {
+  opacity: 1;
+  transform: none;
+}
+
+/* hairline that draws itself (left to right, or top to bottom) */
+.js [data-reveal="draw-x"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur, 700ms) var(--ease-out-expo);
+  transition-delay: min(calc(var(--d, 0ms) * var(--dk, 1)), var(--dmax, 60s));
+}
+
+.js [data-reveal="draw-y"] {
+  opacity: 1;
+  transform: scaleY(0);
+  transform-origin: center top;
+  transition: transform var(--dur, 650ms) var(--ease-out-expo);
+  transition-delay: min(calc(var(--d, 0ms) * var(--dk, 1)), var(--dmax, 60s));
+}
+
+/* Long first-screen choreography delays are for wide screens, where the whole composition is
+   in view at once. On narrow screens the same elements arrive by scrolling, so .dm-* swaps in
+   a short delay and nothing is left waiting after it scrolls into view. */
+@media (max-width: 63.99rem) {
+  .js .dm-0 {
+    --d: 0ms !important;
+  }
+  .js .dm-1 {
+    --d: 100ms !important;
+  }
+  .js .dm-2 {
+    --d: 200ms !important;
+  }
+  .js .dm-3 {
+    --d: 300ms !important;
+  }
+}
+
+/* Content revealed by scrolling on narrow screens arrives on its own, one piece at a time, so the
+   desktop choreography delays shrink to 30% (at most 360ms): nothing waits after it scrolls into
+   view, and pieces arriving together keep their order. A page's opening screen is not marked
+   .rv-scroll (RevealObserver) and keeps its full sequence. */
+@media (max-width: 63.99rem) {
+  .js .rv-scroll {
+    --dk: 0.3;
+    --dmax: 360ms;
+  }
+}
+
+/* SVG strokes (pathLength="1") that draw themselves once their parent reveal fires */
+.js [data-reveal] .draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--pdur, 700ms) var(--ease-in-out-soft);
+  transition-delay: min(calc(var(--pd, 250ms) * var(--dk, 1)), var(--dmax, 60s));
+}
+
+.js [data-reveal].is-in .draw-path {
+  stroke-dashoffset: 0;
+}
+
+.js [data-reveal="draw-x"].is-in,
+.js [data-reveal="draw-y"].is-in {
+  transform: none;
+}
+
+/* fail-safe */
+.js:not(.reveal-ready) [data-reveal],
+.js:not(.reveal-ready) .reveal-lines .line > span {
+  animation: reveal-failsafe 1ms linear 2.4s forwards;
+}
+
+.js:not(.reveal-ready) [data-reveal] .draw-path {
+  animation: draw-failsafe 1ms linear 2.4s forwards;
+}
+
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw-failsafe {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ============================================================================
+   Hero entrance (pure CSS, runs without JavaScript)
+   ========================================================================== */
+@keyframes hero-sky {
+  from {
+    opacity: 0;
+    filter: brightness(1.18) saturate(0.9);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--from, 24px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-line {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cue-pulse {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, var(--float, -8px), 0);
+  }
+}
+
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.anim-float {
+  animation: float-soft var(--float-dur, 6s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+/* the top bar enters once, on first load (master document: Y -10px, 500ms, 120ms delay);
+   it persists across page changes, so it never replays */
+.header-in {
+  animation: header-in 500ms var(--ease-out-expo) 120ms both;
+}
+
+@keyframes header-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+/* ============================================================================
+   Reduced motion: content appears immediately, no drift, no loops
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-reveal="draw-x"],
+  .js [data-reveal="draw-y"],
+  .js .reveal-lines .line > span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .js [data-reveal] .draw-path {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ============================================================================
+   Range input (kit planning lab)
+   ========================================================================== */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 1.5rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--color-blue) var(--fill, 50%), var(--color-line) var(--fill, 50%));
+}
+
+.range::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-line);
+}
+
+.range::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-blue);
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -7px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--color-blue);
+  box-shadow: 0 2px 6px rgb(11 61 145 / 0.25);
+  transition: transform 160ms var(--ease-out-expo);
+}
+
+.range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--color-blue);
+  box-shadow: 0 2px 6px rgb(11 61 145 / 0.25);
+}
+
+.range:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+@media (hover: hover) {
+  .range:hover::-webkit-slider-thumb {
+    transform: scale(1.12);
+  }
+}
+
+.range:focus-visible {
+  outline: none;
+}
+
+.range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgb(20 95 229 / 0.25);
+}
+
+.range:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 4px rgb(20 95 229 / 0.25);
+}
+
+/* ============================================================================
+   Smooth cursor (mouse / trackpad only; see SmoothCursor.tsx)
+   ========================================================================== */
+.smooth-cursor-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  display: none;
+}
+
+html.smooth-cursor .smooth-cursor-layer {
+  display: block;
+}
+
+html.smooth-cursor,
+html.smooth-cursor * {
+  cursor: none !important;
+}
+
+html.smooth-cursor.cursor-text input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+html.smooth-cursor.cursor-text textarea,
+html.smooth-cursor.cursor-text [contenteditable="true"] {
+  cursor: text !important;
+}
+
+.smooth-cursor-dot,
+.smooth-cursor-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 999px;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 240ms var(--ease-out-expo);
+}
+
+.smooth-cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: var(--color-blue);
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.85);
+}
+
+.smooth-cursor-ring {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border: 1.5px solid rgb(20 95 229 / 0.55);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35);
+  transition:
+    opacity 240ms var(--ease-out-expo),
+    background-color 240ms var(--ease-out-expo),
+    border-color 240ms var(--ease-out-expo);
+}
+
+.smooth-cursor-ring.is-active {
+  background: rgb(20 95 229 / 0.08);
+  border-color: rgb(20 95 229 / 0.8);
+}
+
+html.cursor-visible .smooth-cursor-dot,
+html.cursor-visible .smooth-cursor-ring {
+  opacity: 1;
+}
+
+/* over dark surfaces (menu, photo scene, footer) the cursor turns white */
+html.cursor-on-dark .smooth-cursor-dot {
+  background: #fff;
+  box-shadow: 0 0 0 2px rgb(11 61 145 / 0.45);
+}
+
+html.cursor-on-dark .smooth-cursor-ring {
+  border-color: rgb(255 255 255 / 0.75);
+  box-shadow: none;
+}
+
+html.cursor-on-dark .smooth-cursor-ring.is-active {
+  background: rgb(255 255 255 / 0.12);
+  border-color: #fff;
+}
+
+html.cursor-text .smooth-cursor-dot,
+html.cursor-text .smooth-cursor-ring {
+  opacity: 0;
+}
+
+/* ============================================================================
+   Smooth scrolling (Lenis) and page transitions
+   ========================================================================== */
+html.lenis {
+  scroll-behavior: auto !important;
+}
+
+/* the hanging print waits for JS to arm its entrance (fail-safe: shown after 3s) */
+.js .print-load:not([data-ready]) {
+  visibility: hidden;
+  animation: show-failsafe 1ms linear 3s forwards;
+}
+
+@keyframes show-failsafe {
+  to {
+    visibility: visible;
+  }
+}
+
+/* View Transitions API: the header stays put while the page cross-fades */
+/* page transition 350-550ms: a true cross-fade. Both pages share one duration and curve, so their
+   opacities always add up to 1 (with the default plus-lighter blend) and nothing flashes white. */
+::view-transition-old(root) {
+  animation: 460ms cubic-bezier(0.4, 0, 0.2, 1) both vt-out;
+}
+
+::view-transition-new(root) {
+  animation: 460ms cubic-bezier(0.4, 0, 0.2, 1) both vt-in;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+/* browsers without view transitions: the new page fades in */
+html.navigated:not(.vt) .page-shell {
+  animation: vt-in 460ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

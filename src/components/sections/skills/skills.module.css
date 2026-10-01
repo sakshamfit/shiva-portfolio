@@ -1,0 +1,635 @@
+/* ===========================================================================
+   Skills landscape: CSS laptop + grounded objects + floating skill pills
+   ========================================================================= */
+
+.scene {
+  position: relative;
+  display: grid;
+  gap: 2.5rem;
+  justify-items: center;
+}
+
+/* ---------- laptop (front view, real 3D tilt driven by pointer) */
+.laptopWrap {
+  position: relative;
+  width: min(92vw, 36rem);
+  perspective: 1600px;
+  z-index: 2;
+}
+
+.laptop {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.bezel {
+  position: relative;
+  border-radius: 18px 18px 6px 6px;
+  background: linear-gradient(180deg, #1c2536, #0d1422);
+  padding: 2.4% 2.4% 3.2%;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.06),
+    0 30px 60px -30px rgb(6 26 63 / 0.55);
+}
+
+.bezel::before {
+  /* camera dot */
+  content: "";
+  position: absolute;
+  top: 1%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 999px;
+  background: #2a3346;
+}
+
+.display {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f6f9fd;
+  container-type: inline-size;
+}
+
+.display::after {
+  /* screen glare that follows the tilt (set via --gx) */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.22) calc(45% + var(--gx, 0%)), transparent 60%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.base {
+  position: relative;
+  margin: 0 -7.5%;
+  height: clamp(10px, 2.6vw, 20px);
+  border-radius: 2px 2px 14px 14px / 2px 2px 10px 10px;
+  background: linear-gradient(180deg, #eef2f7 0%, #d7dfe9 45%, #aeb9c8 100%);
+  box-shadow: 0 18px 30px -14px rgb(6 26 63 / 0.45);
+}
+
+.base::before {
+  /* opening notch */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16%;
+  height: 38%;
+  translate: -50% 0;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, #b9c3d1, #cfd7e2);
+}
+
+.shadow {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: -6%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgb(6 26 63 / 0.28), transparent 70%);
+  filter: blur(6px);
+  z-index: -1;
+}
+
+/* ---------- screen UI (all sizes in container units so it scales with the laptop) */
+.screenUi {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 7% 1fr;
+  font-size: 1.55cqi;
+  color: #101828;
+}
+
+.screenNav {
+  background: #0b3d91;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 2.4cqi;
+  padding-top: 2.2cqi;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.screenLogo {
+  width: 3cqi;
+  height: 3cqi;
+  border-radius: 0.8cqi;
+  background: #fff;
+  opacity: 0.9;
+}
+
+.navItem,
+.navOn {
+  display: grid;
+  place-items: center;
+  width: 3.4cqi;
+  height: 3.4cqi;
+  border-radius: 0.8cqi;
+}
+
+.navItem svg,
+.navOn svg {
+  width: 2cqi;
+  height: 2cqi;
+}
+
+.navOn {
+  background: rgb(255 255 255 / 0.18);
+  color: #fff;
+}
+
+.screenMain {
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 1.3cqi;
+  padding: 1.6cqi 2cqi 2cqi;
+  min-height: 0;
+}
+
+.screenTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.screenTitle {
+  font-size: 1.9cqi;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.screenPill {
+  font-size: 1.35cqi;
+  font-weight: 600;
+  padding: 0.4cqi 1.1cqi;
+  border-radius: 999px;
+  background: #eceafd;
+  color: #3f32a8;
+}
+
+.screenMap {
+  min-height: 0;
+  border-radius: 1cqi;
+  background: #fff;
+  border: 1px solid #e3e9f2;
+  padding: 0.8cqi;
+}
+
+.route {
+  stroke-dasharray: 3 3;
+}
+
+.screenKpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1cqi;
+}
+
+.screenKpi {
+  display: grid;
+  gap: 0.2cqi;
+  padding: 1cqi 1.2cqi;
+  border-radius: 1cqi;
+  background: #fff;
+  border: 1px solid #e3e9f2;
+}
+
+.kpiLabel {
+  font-size: 1.25cqi;
+  color: #667085;
+}
+
+.kpiValue {
+  font-size: 2.5cqi;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.kpiDelta {
+  font-size: 1.2cqi;
+  font-weight: 600;
+  color: #0a8a0a;
+}
+
+.screenCharts {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1cqi;
+}
+
+.screenCard {
+  display: grid;
+  gap: 0.8cqi;
+  padding: 1.1cqi 1.2cqi;
+  border-radius: 1cqi;
+  background: #fff;
+  border: 1px solid #e3e9f2;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.7cqi;
+  height: 8.5cqi;
+}
+
+.bars span {
+  flex: 1;
+  border-radius: 0.5cqi 0.5cqi 0 0;
+  background: linear-gradient(180deg, #145fe5, #5b8ff0);
+  transform-origin: bottom;
+}
+
+.hbars {
+  display: grid;
+  gap: 0.75cqi;
+}
+
+.hbar {
+  display: grid;
+  grid-template-columns: 9cqi 1fr;
+  align-items: center;
+  font-size: 1.15cqi;
+  color: #344054;
+}
+
+.hbarTrack {
+  height: 0.9cqi;
+}
+
+.hbarTrack span {
+  display: block;
+  height: 100%;
+  border-radius: 0 0.5cqi 0.5cqi 0;
+  background: #145fe5;
+  transform-origin: left;
+}
+
+/* bars grow once the scene is revealed */
+:global(.js) .scene[data-reveal] .bars span {
+  transform: scaleY(0.05);
+  transition: transform 900ms var(--ease-out-expo);
+  transition-delay: calc(700ms + var(--i) * 45ms);
+}
+
+:global(.js) .scene[data-reveal] .hbarTrack span {
+  transform: scaleX(0.05);
+  transition: transform 900ms var(--ease-out-expo);
+  transition-delay: calc(900ms + var(--i) * 80ms);
+}
+
+:global(.js) .scene[data-reveal]:global(.is-in) .bars span,
+:global(.js) .scene[data-reveal]:global(.is-in) .hbarTrack span {
+  transform: none;
+}
+
+/* ---------- objects */
+.objects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.object {
+  position: relative;
+}
+
+.object img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.object::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -4%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgb(6 26 63 / 0.22), transparent 70%);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.caseSlot {
+  width: min(30vw, 11rem);
+}
+
+.cameraSlot {
+  width: min(14vw, 4.8rem);
+}
+
+.droneSlot {
+  width: min(36vw, 13rem);
+}
+
+.batterySlot {
+  width: min(22vw, 7.5rem);
+}
+
+.tripodSlot {
+  width: min(17vw, 5.5rem);
+}
+
+.chartTile {
+  width: min(16vw, 5rem);
+}
+
+.chartTileFace {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 9%;
+  aspect-ratio: 1;
+  padding: 20% 18% 18%;
+  border-radius: 22%;
+  background: linear-gradient(145deg, #ffffff, #eef3fb);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.9) inset,
+    0 18px 30px -14px rgb(6 26 63 / 0.35),
+    0 4px 10px -6px rgb(6 26 63 / 0.25);
+  transform: rotate(-9deg);
+}
+
+.chartTileFace span {
+  flex: 1;
+  border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(180deg, #3d7ff2, #1553d6);
+  box-shadow: inset -3px 0 0 rgb(8 40 130 / 0.35);
+}
+
+/* Phones and tablets: the two analytics tiles sit side by side under the laptop (on wide screens they float
+   either side of it, below). */
+@media (max-width: 63.99rem) {
+  .scene {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.75rem;
+  }
+
+  .scene > * {
+    grid-column: 1 / -1;
+  }
+
+  .laptopWrap {
+    grid-row: 1;
+  }
+
+  .tile {
+    grid-row: 2;
+    align-self: stretch;
+    width: 100%;
+    max-width: 14rem;
+    margin-top: -1rem;
+    padding: 0.85rem 0.9rem;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .tileA {
+    grid-column: 1;
+    justify-self: end;
+  }
+
+  .tileB {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* ---------- pills */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  max-width: 40rem;
+}
+
+.pillWrap {
+  position: relative;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.05rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  font-size: 0.9rem;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  box-shadow: var(--shadow-soft);
+  transition:
+    background-color 220ms,
+    color 220ms,
+    border-color 220ms,
+    box-shadow 220ms var(--ease-out-expo),
+    translate 220ms var(--ease-out-expo);
+}
+
+.pill[aria-expanded="true"] {
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+  color: #fff;
+  box-shadow: var(--shadow-lift);
+  translate: 0 -3px;
+}
+
+@media (hover: hover) {
+  .pill:hover {
+    background: var(--color-navy);
+    border-color: var(--color-navy);
+    color: #fff;
+    box-shadow: var(--shadow-lift);
+    translate: 0 -3px;
+  }
+}
+
+.pillDot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--color-blue);
+  transition: background-color 220ms;
+}
+
+.pill[aria-expanded="true"] .pillDot {
+  background: #8fb6f5;
+}
+
+@media (hover: hover) {
+  .pill:hover .pillDot {
+    background: #8fb6f5;
+  }
+}
+
+.proof {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  translate: -50% 0;
+  width: max-content;
+  max-width: min(17rem, 80vw);
+  padding: 0.7rem 0.85rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-lift);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--color-ink-2);
+}
+
+/* ===========================================================================
+   Wide screens: composed scene with objects and pills around the laptop
+   ========================================================================= */
+@media (min-width: 64rem) {
+  .scene {
+    display: block;
+    height: clamp(40rem, 50vw, 46rem);
+  }
+
+  .laptopWrap {
+    position: absolute;
+    left: 50%;
+    top: 7%;
+    width: clamp(30rem, 40vw, 38rem);
+    translate: -50% 0;
+  }
+
+  .objects {
+    display: contents;
+  }
+
+  .object {
+    position: absolute;
+    z-index: 3;
+  }
+
+  .caseSlot {
+    left: 17%;
+    top: 49%;
+    width: clamp(10rem, 14vw, 13.5rem);
+  }
+
+  .cameraSlot {
+    left: 30.5%;
+    top: 70%;
+    width: clamp(4rem, 5.4vw, 5.4rem);
+    z-index: 4;
+  }
+
+  .droneSlot {
+    right: 13%;
+    top: 55%;
+    width: clamp(12rem, 17vw, 16rem);
+  }
+
+  .batterySlot {
+    left: 3%;
+    top: 65%;
+    width: clamp(6rem, 8.2vw, 8rem);
+    z-index: 2;
+  }
+
+  .tripodSlot {
+    right: 2.5%;
+    top: 58%;
+    width: clamp(4.6rem, 6.2vw, 6rem);
+    z-index: 2;
+  }
+
+  .chartTile {
+    left: 3.5%;
+    top: 13%;
+    width: clamp(4.2rem, 5.4vw, 5.25rem);
+    z-index: 2;
+  }
+
+  .tile {
+    display: grid;
+    position: absolute;
+    z-index: 1;
+    gap: 0.35rem;
+    width: 12.5rem;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    background: rgb(255 255 255 / 0.9);
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .tileA {
+    left: 12.5%;
+    top: 12%;
+  }
+
+  .tileB {
+    right: 12.5%;
+    top: 16%;
+  }
+
+  .pills {
+    display: contents;
+  }
+
+  .pillWrap {
+    position: absolute;
+    z-index: 6;
+  }
+
+  .pillWrap:has(.pill[aria-expanded="true"]) {
+    z-index: 8;
+  }
+
+  .p0 {
+    left: 3.5%;
+    top: 36%;
+  }
+  .p1 {
+    right: 4%;
+    top: 40%;
+  }
+  .p2 {
+    left: 2.5%;
+    top: 58%;
+  }
+  .p3 {
+    right: 3%;
+    top: 84%;
+  }
+  .p4 {
+    left: 14%;
+    top: 88%;
+  }
+  .p5 {
+    right: 2.5%;
+    top: 29%;
+  }
+  .p6 {
+    left: 50%;
+    top: 91%;
+    translate: -50% 0;
+  }
+}

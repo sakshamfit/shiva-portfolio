@@ -1,0 +1,271 @@
+/* ---------------------------------------------------------------------------
+   "Why choose me?": a print lowered on cables into the sky, WHY and CHOOSE either side of it, ME? below, reasons
+   around the edges and the numbers along the bottom.
+   ------------------------------------------------------------------------- */
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #a9cdf1;
+  color: var(--color-navy-900);
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  /* phones: both corner labels on top (as on desktop), then one column */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "cl cr"
+    "why why"
+    "choose choose"
+    "me me"
+    "load load"
+    "stmt stmt"
+    "r1 r1"
+    "r2 r2"
+    "r3 r3"
+    "r4 r4"
+    "r5 r5"
+    "stats stats"
+    "loc loc";
+  column-gap: 1rem;
+  row-gap: 2rem;
+  /* leave the bottom of the backdrop clear of the copy */
+  padding-block: calc(var(--header-h) + 2.5rem) calc(16vw + 2rem);
+}
+
+@media (min-width: 40rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "cl cr"
+      "why why"
+      "choose choose"
+      "me me"
+      "load load"
+      "stmt stmt"
+      "r1 r2"
+      "r3 r4"
+      "r5 ."
+      "stats stats"
+      "loc loc";
+    column-gap: 2rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 25rem) minmax(0, 1fr);
+    grid-template-areas:
+      "cl load cr"
+      "r1 load r2"
+      "why load choose"
+      "stmt load r3"
+      "r4 me r5"
+      "stats stats stats"
+      "loc loc loc";
+    column-gap: clamp(1.5rem, 3vw, 3rem);
+    row-gap: 1.75rem;
+    padding-block: calc(var(--header-h) + 1.5rem) clamp(13rem, 23vw, 22rem);
+  }
+}
+
+.cornerLeft {
+  grid-area: cl;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+}
+
+.cornerRight {
+  grid-area: cr;
+  justify-self: end;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+}
+
+.load {
+  grid-area: load;
+  position: relative;
+  z-index: 2;
+  justify-self: center;
+  width: min(100%, 19rem);
+}
+
+@media (min-width: 64rem) {
+  .load {
+    width: 100%;
+    align-self: start;
+    margin-top: 4rem;
+  }
+}
+
+/* the cables: from far above the frame down to the top of the print */
+.cables {
+  position: absolute;
+  left: 47.2%;
+  bottom: 98.6%;
+  width: 7%;
+  height: 80rem;
+  pointer-events: none;
+}
+
+.cables span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgb(34 40 52 / 0.1), rgb(34 40 52 / 0.78) 60%, rgb(34 40 52 / 0.9));
+}
+
+.cables span:nth-child(1) {
+  left: 0;
+}
+
+.cables span:nth-child(2) {
+  left: 46%;
+}
+
+.cables span:nth-child(3) {
+  right: 0;
+}
+
+.big {
+  font-size: clamp(4.2rem, 1.2rem + 12vw, 6.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  font-weight: 860;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 6px 34px rgb(11 61 145 / 0.22);
+}
+
+@media (min-width: 64rem) {
+  .big {
+    font-size: clamp(5rem, 0.5rem + 6.8vw, 9rem);
+  }
+}
+
+.why {
+  grid-area: why;
+}
+
+.why .big {
+  margin-top: 0.75rem;
+}
+
+.choose {
+  grid-area: choose;
+}
+
+.me {
+  grid-area: me;
+}
+
+@media (min-width: 64rem) {
+  .why {
+    justify-self: end;
+    align-self: center;
+    text-align: right;
+    position: relative;
+    z-index: 1;
+    margin-right: -1rem;
+  }
+  .choose {
+    justify-self: start;
+    align-self: end;
+    position: relative;
+    z-index: 1;
+    margin-left: -1rem;
+  }
+  .me {
+    justify-self: center;
+    margin-top: -1.5rem;
+  }
+}
+
+.statement {
+  grid-area: stmt;
+  max-width: 24rem;
+}
+
+.reason {
+  position: relative;
+}
+
+.r1 {
+  grid-area: r1;
+}
+.r2 {
+  grid-area: r2;
+}
+.r3 {
+  grid-area: r3;
+}
+.r4 {
+  grid-area: r4;
+}
+.r5 {
+  grid-area: r5;
+}
+
+@media (min-width: 64rem) {
+  .r2,
+  .r3,
+  .r5 {
+    justify-self: end;
+    width: min(100%, 18.5rem);
+  }
+  .r3 {
+    align-self: center;
+  }
+  .r4,
+  .r5 {
+    align-self: end;
+  }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  border: 1.5px solid rgb(6 26 63 / 0.85);
+  color: var(--color-navy-900);
+  background: rgb(255 255 255 / 0.18);
+  transition:
+    background-color 220ms var(--ease-out-expo),
+    transform 220ms var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .reason:hover .icon {
+    background: rgb(255 255 255 / 0.55);
+    transform: translateY(-2px);
+  }
+}
+
+.stats {
+  grid-area: stats;
+  justify-self: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .stats > div + div {
+    border-left: 1px solid rgb(6 26 63 / 0.35);
+  }
+}
+
+.location {
+  grid-area: loc;
+  font-size: 0.72rem;
+}

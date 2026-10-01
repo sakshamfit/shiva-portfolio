@@ -1,0 +1,374 @@
+.map {
+  position: relative;
+}
+
+.mapBase {
+  -webkit-mask-image: radial-gradient(115% 100% at 50% 50%, #000 62%, transparent 98%);
+  mask-image: radial-gradient(115% 100% at 50% 50%, #000 62%, transparent 98%);
+}
+
+
+.arc {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+/* the route draws itself once the map group is revealed (visible by default without JS) */
+:global(.js) .map[data-reveal] .arc {
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1600ms var(--ease-in-out-soft) 300ms;
+}
+
+:global(.js) .map[data-reveal]:global(.is-in) .arc {
+  stroke-dashoffset: 0;
+}
+
+.pin {
+  fill: #fff;
+  stroke: #0b3d91;
+  stroke-width: 3.5;
+}
+
+.pinEnd {
+  fill: #0b3d91;
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.ring {
+  fill: none;
+  stroke: #0b3d91;
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+}
+
+:global(.is-in) .ring {
+  animation: ring 1.6s var(--ease-out-expo) 2.4s 2;
+}
+
+@keyframes ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.label {
+  position: absolute;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.92);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-soft);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.label[data-align="top-left"] {
+  translate: -22% calc(-100% - 0.9rem);
+}
+
+@media (min-width: 40rem) {
+  .label[data-align="top-left"] {
+    translate: calc(-100% - 0.9rem) calc(-100% - 0.6rem);
+  }
+}
+
+.label[data-align="top-right"] {
+  translate: 0.5rem calc(-100% - 0.7rem);
+}
+
+.label[data-align="bottom"] {
+  translate: -62% 1rem;
+}
+
+.labelCity {
+  font-size: clamp(0.72rem, 0.6rem + 0.35vw, 0.86rem);
+  font-weight: 620;
+  color: var(--color-ink);
+}
+
+.labelDetail {
+  font-size: clamp(0.7rem, 0.6rem + 0.3vw, 0.78rem);
+  color: var(--color-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Training stage: the arch-framed training photograph with four notes and a facts bar.
+   Mobile: photo, facts bar, then the notes. Desktop: notes flank the arch and
+   the bar overlaps its base, as in the Education reference.
+   ------------------------------------------------------------------------- */
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "arch" "bar" "program" "accreditation" "location" "community";
+  row-gap: 1.75rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 40rem) {
+  .stage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "arch arch" "bar bar" "program location" "accreditation community";
+    column-gap: 1.5rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .stage {
+    grid-template-columns: minmax(14rem, 17.5rem) minmax(0, 1fr) minmax(14rem, 17.5rem);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "program arch location"
+      "accreditation arch community"
+      ". bar .";
+    column-gap: 0;
+    row-gap: 0;
+    margin-top: 3.5rem;
+  }
+}
+
+.arch {
+  grid-area: arch;
+  position: relative;
+  margin-inline: calc(var(--gutter) * -0.6);
+  z-index: 0;
+}
+
+@media (min-width: 64rem) {
+  /* the trees run a little under the notes, like the reference */
+  .arch {
+    margin-inline: -1.25rem;
+  }
+}
+
+.archLine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.archLine path {
+  stroke: rgb(20 95 229 / 0.22);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.bar {
+  grid-area: bar;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: -1.75rem;
+  margin-inline: auto;
+  width: min(100%, 50rem);
+  border-radius: 22px;
+  border: 1px solid var(--color-line-soft);
+  background: rgb(255 255 255 / 0.96);
+  box-shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 24px 50px -24px rgb(11 61 145 / 0.3);
+}
+
+.bar > div + div {
+  border-top: 1px solid var(--color-line-soft);
+}
+
+@media (min-width: 40rem) {
+  .bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .bar > div + div {
+    border-top: 0;
+    border-left: 1px solid var(--color-line-soft);
+  }
+}
+
+@media (min-width: 64rem) {
+  .bar {
+    margin-top: -4.25rem;
+    width: min(100%, 52rem);
+  }
+}
+
+.callout {
+  position: relative;
+  z-index: 1;
+}
+
+/* notes can sit over the edge of the tree line: keep their copy legible */
+.callout > p {
+  text-shadow:
+    0 0 10px #fff,
+    0 0 3px #fff;
+}
+
+/* each note takes its slot around the photograph; the grid areas are set on the stage */
+.program {
+  grid-area: program;
+}
+.accreditation {
+  grid-area: accreditation;
+}
+.location {
+  grid-area: location;
+}
+.community {
+  grid-area: community;
+}
+
+@media (min-width: 64rem) {
+  .program,
+  .location {
+    align-self: start;
+    margin-top: 1.5rem;
+  }
+  .accreditation,
+  .community {
+    align-self: end;
+    margin-bottom: 5.5rem;
+  }
+  .location,
+  .community {
+    justify-self: end;
+  }
+}
+
+.program {
+  grid-area: program;
+}
+.accreditation {
+  grid-area: accreditation;
+}
+.location {
+  grid-area: location;
+}
+.community {
+  grid-area: community;
+}
+
+@media (min-width: 64rem) {
+  .program,
+  .location {
+    align-self: start;
+    margin-top: 1.5rem;
+  }
+  .accreditation,
+  .community {
+    align-self: end;
+    margin-bottom: 5.5rem;
+  }
+  .location,
+  .community {
+    justify-self: end;
+  }
+}
+
+.calloutCard {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  border-radius: 18px;
+  border: 1px solid var(--color-line-soft);
+  background: #fff;
+  padding: 0.85rem 1.1rem 0.85rem 0.85rem;
+  box-shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 18px 40px -22px rgb(11 61 145 / 0.3);
+  transition:
+    transform 220ms var(--ease-out-expo),
+    box-shadow 220ms var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .callout:hover .calloutCard {
+    transform: translateY(-3px);
+    box-shadow: 0 1px 2px rgb(16 24 40 / 0.05), 0 24px 46px -22px rgb(11 61 145 / 0.36);
+  }
+}
+
+.calloutIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-blue);
+  box-shadow: 0 0 0 1px var(--color-line-soft), 0 10px 22px -12px rgb(11 61 145 / 0.45);
+}
+
+/* curves that tie each note to the arch (desktop only) */
+.connector {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .connector {
+    display: block;
+    position: absolute;
+    width: 6rem;
+    height: 4rem;
+    color: #5b6cf0;
+    pointer-events: none;
+  }
+  .program .connector {
+    left: calc(100% - 0.25rem);
+    top: 0.4rem;
+  }
+  .accreditation .connector {
+    left: calc(100% - 0.75rem);
+    top: -2.9rem;
+  }
+  .location .connector {
+    right: calc(100% - 0.25rem);
+    top: 0.4rem;
+    transform: scaleX(-1);
+  }
+  .community .connector {
+    right: calc(100% - 0.75rem);
+    top: -2.9rem;
+    transform: scaleX(-1);
+  }
+}
+
+.dot {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+:global(.js) [data-reveal] .dot {
+  opacity: 0;
+  transform: scale(0.3);
+  transition:
+    opacity 300ms var(--ease-out-expo),
+    transform 420ms var(--ease-out-expo);
+  /* lands as its connector finishes drawing (the path delay scales like globals.css .draw-path) */
+  transition-delay: calc(min(calc(var(--pd, 380ms) * var(--dk, 1)), var(--dmax, 60s)) + var(--pdur, 650ms) - 120ms);
+}
+
+:global(.js) [data-reveal]:global(.is-in) .dot {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(.js) [data-reveal] .dot {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
