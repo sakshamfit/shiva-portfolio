@@ -1,6 +1,6 @@
-# Siva — Drone Photographer Portfolio
+# Shiva — Drone Photographer Portfolio
 
-A fast, mobile-first portfolio website for **Siva**, a drone photographer and aerial cinematographer
+A fast, mobile-first portfolio website for **Shiva**, a drone photographer and aerial cinematographer
 based in **Gorakhpur, Uttar Pradesh, India** (Instagram / YouTube: `@gkp_drone`). It presents his aerial
 films, stills, mapping and site-documentation work, the camera and drone kit behind them, and gives
 clients one-tap ways to call, WhatsApp, email or follow him.
@@ -9,7 +9,7 @@ clients one-tap ways to call, WhatsApp, email or follow him.
 
 | | |
 | --- | --- |
-| **For** | Siva, drone photographer (the client) |
+| **For** | Shiva, drone photographer (the client) |
 | **Built by** | [`sakshamfit`](https://github.com/sakshamfit) on GitHub — Anshuman Pandey, founder of NEARconnect, who builds portfolio and business sites for local clients (see his other repos, e.g. `prince-portfolio`, `import-exprot-portfolio`, `real-state`) and his own site at <https://sakshamfit.netlify.app/> |
 | **Repository** | <https://github.com/sakshamfit/shiva-portfolio> (public, default branch `main`) |
 | **Stack** | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Motion, Lenis, Phosphor icons |
@@ -18,9 +18,10 @@ clients one-tap ways to call, WhatsApp, email or follow him.
 
 ### What a visitor sees
 
-1. **Landing (`/`)** — a full-screen aerial frame at golden hour with an *Explore* button that opens
-   the full-screen menu.
-2. **About, Experience, Projects, Skills, Education** — the story, the flight pipeline and numbers,
+1. **The profile (`/`)** — the site opens on **About**: the portrait stage (Shiva standing in front of
+   his own name, the five stages of a shoot around him) with the *field deck* on the right — what a
+   booking produces, a flight-instrument readout and a booking note — then “Why choose me?”.
+2. **Experience, Projects, Skills, Education** — the flight pipeline and numbers,
    four case studies (aerial film, mapping, kit management, progress documentation) with small working
    demos, capabilities and certificates, and a journey map of his training.
 3. **Contact** — phone, WhatsApp, email, Instagram, Facebook, YouTube and a message form.
@@ -70,8 +71,8 @@ Other scripts: `npm run lint`, `npm run typecheck`, `npm run generate:maps`
 
 | Route | Content |
 | --- | --- |
-| `/` | Landing — an aerial frame at golden hour; Explore opens the full-screen menu |
-| `/about` | Portrait collage, the five stages of a shoot, “Why choose me?” |
+| `/` | The profile: portrait collage and field deck, the five stages of a shoot, “Why choose me?” |
+| `/about` | Redirects to `/#about` — About is the opening screen of the site |
 | `/experience` | The flight pipeline, roles, KPIs and the case-study cards |
 | `/projects` | Case studies with working demonstrations |
 | `/skills` | Five capability areas, tools, certificates and languages |
@@ -86,9 +87,23 @@ Typed content lives under `src/content/` (`site.ts`, `about.ts`, `experience.ts`
 `public/resume/`; rebuild it with `node scripts/build-resume.mjs` after editing the text in
 that script.
 
+### The field deck
+
+The right-hand half of the About stage (`src/components/sections/about/WorkDeck.tsx`, text in
+`workDeck` inside `src/content/about.ts`) is what fills the space beside the standing portrait: a
+pinned sheet of the deliverables, a dark instrument panel (attitude indicator, altitude, satellites,
+ISO, wind, signal and battery bars) and an amber booking note written in a hand face. Its type sizes
+are taken from the stage container (`cqi`), so the sheets keep the proportions of the collage around
+them at every width, and below 1100px the same two sheets drop into the reading flow under the portrait.
+
+The binder clip and pencil (`public/images/ui/stationery/`) and the hand face (`src/app/fonts/Hand.woff`)
+are lifted from the sibling repo [`sakshamfit/prince-portfolio`](https://github.com/sakshamfit/prince-portfolio),
+where they belong to the cutting-mat stationery language. Font licensing is recorded in that repository
+(`licenses/URW-fonts-copyright.txt`).
+
 ## Contact details
 
-Siva's email, phone and the Instagram / Facebook / YouTube / WhatsApp links are set in
+Shiva's email, phone and the Instagram / Facebook / YouTube / WhatsApp links are set in
 `src/content/site.ts` (the footer, the menu and `/contact` all read from there). WhatsApp points
 at the same number as the phone (`wa.me/918009369410`).
 

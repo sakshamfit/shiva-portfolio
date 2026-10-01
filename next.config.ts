@@ -12,6 +12,16 @@ const nextConfig: NextConfig = {
     deviceSizes: [390, 640, 828, 1080, 1280, 1600, 1920, 2400, 2880],
     imageSizes: [64, 128, 192, 256, 384],
   },
+  async redirects() {
+    return [
+      {
+        // the profile opens on the About section, so /about is the home page
+        source: "/about",
+        destination: "/#about",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

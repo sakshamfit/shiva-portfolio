@@ -2,7 +2,7 @@
  * Skills, grouped the way a flying-shooting-grading job actually divides up.
  * No proficiency ratings: each capability is backed by an example of where it was used.
  *
- * TODO: swap any tool names for the ones Siva really shoots with.
+ * TODO: swap any tool names for the ones Shiva really shoots with.
  */
 
 export type CapabilityId = "flying" | "camera" | "cinema" | "post" | "studio";

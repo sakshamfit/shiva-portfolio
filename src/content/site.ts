@@ -1,13 +1,13 @@
 /**
- * Identity, contact details, social links and navigation for Siva.
+ * Identity, contact details, social links and navigation for Shiva.
  *
  * TODO: set the site URL in NEXT_PUBLIC_SITE_URL / `site.url` once the domain is live.
  * A social with an empty `href` is shown as "link coming soon" rather than linking elsewhere.
  */
 
 export const site = {
-  name: "Siva",
-  firstName: "Siva",
+  name: "Shiva",
+  firstName: "Shiva",
   role: "Drone Photographer & Aerial Cinematographer",
   specialism: "Aerial Films, Aerial Stills & Camera Craft",
   location: "Gorakhpur, Uttar Pradesh, India",
@@ -20,7 +20,7 @@ export const site = {
   },
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
-    "Siva is a drone photographer and aerial cinematographer based in Gorakhpur, Uttar Pradesh. Aerial films, stills, mapping and site documentation, shot and graded in-house.",
+    "Shiva is a drone photographer and aerial cinematographer based in Gorakhpur, Uttar Pradesh. Aerial films, stills, mapping and site documentation, shot and graded in-house.",
 } as const;
 
 export type SocialId = "instagram" | "facebook" | "youtube" | "whatsapp";
@@ -45,11 +45,11 @@ export const LINK_PENDING = "Link coming soon";
 
 /** The single, approved résumé. Replace the file in /public/resume to update it. */
 export const resume = {
-  href: "/resume/Siva-Drone-Photographer-CV.pdf",
-  fileName: "Siva-Drone-Photographer-CV.pdf",
+  href: "/resume/Shiva-Drone-Photographer-CV.pdf",
+  fileName: "Shiva-Drone-Photographer-CV.pdf",
   format: "PDF",
   pages: 1,
-  size: "480 KB",
+  size: "6 KB",
   updated: "Oct 2026",
   thumbnail: "/images/ui/cv-page.jpg",
 } as const;
@@ -67,7 +67,7 @@ export type MenuItem = {
 
 /** Full-screen menu destinations, each opening its own page. */
 export const menuItems: MenuItem[] = [
-  { index: "01", label: "About Me", href: "/about", preview: "about" },
+  { index: "01", label: "About Me", href: "/", preview: "about" },
   { index: "02", label: "Projects", href: "/projects", preview: "projects" },
   { index: "03", label: "Skills", href: "/skills", preview: "skills" },
   { index: "04", label: "Education", href: "/education", preview: "education" },
@@ -77,7 +77,7 @@ export const menuItems: MenuItem[] = [
 
 /** Page navigation in the header bar, in reading order. */
 export const pageLinks = [
-  { label: "About", href: "/about", description: "Who I am and how I fly, shoot and deliver." },
+  { label: "About", href: "/", description: "Who I am and how I fly, shoot and deliver." },
   { label: "Experience", href: "/experience", description: "Aerial work, camera specialism and the numbers behind them." },
   { label: "Projects", href: "/projects", description: "Four case studies: aerial film, mapping, kit systems and site documentation." },
   { label: "Skills", href: "/skills", description: "Flying, cameras, cinematography and post, each tied to a real use." },
@@ -87,7 +87,7 @@ export const pageLinks = [
 
 /** Secondary destinations shown in the menu's top bar. */
 export const quickLinks = [
-  { label: "Home", href: "/" },
+  { label: "About", href: "/" },
   { label: "Experience", href: "/experience" },
   { label: "Case studies", href: "/projects#case-studies" },
   { label: "Certifications", href: "/skills#credentials" },

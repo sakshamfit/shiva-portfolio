@@ -1,10 +1,21 @@
-import { HomeHero } from "@/components/sections/hero/HomeHero";
+import { AboutSection } from "@/components/sections/about/AboutSection";
+import { WhyChooseMe } from "@/components/sections/about/WhyChooseMe";
+import { NextPage } from "@/components/layout/NextPage";
 
-/** The landing screen: the aerial view and the menu, which leads into every page. */
+/**
+ * The profile opens on the About section: the portrait stage, what the work produces and
+ * why to book it. There is no separate landing screen — the site starts with Shiva.
+ */
 export default function HomePage() {
   return (
     <main id="main">
-      <HomeHero />
+      <AboutSection />
+      <WhyChooseMe />
+      <NextPage
+        label="Experience"
+        href="/experience"
+        description="How the work is run, from Gorakhpur: the flight pipeline, camera craft and the years spent behind the counter."
+      />
     </main>
   );
 }

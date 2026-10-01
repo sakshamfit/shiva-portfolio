@@ -1,5 +1,5 @@
 /**
- * Training and education for Siva.
+ * Training and education for Shiva.
  *
  * TODO: the school, the training partner and the years are placeholders — replace them
  * with the real record. The layout expects two qualifications.

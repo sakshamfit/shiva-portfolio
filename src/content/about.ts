@@ -1,9 +1,9 @@
 /**
- * About section content for Siva.
+ * About section content for Shiva.
  *
  * The five "links of the chain" become the five stages of a shoot: plan, fly, frame, post, deliver.
  * TODO: the portrait photographs are AI-generated placeholders — replace the files in
- * /public/images/portraits with Siva's own pictures (keep the file names).
+ * /public/images/portraits with Shiva's own pictures (keep the file names).
  */
 
 export type PortraitId = "operations" | "office" | "suit" | "field" | "casual";
@@ -24,35 +24,71 @@ export const portraits: Record<
     src: "/images/portraits/suit.webp",
     width: 530,
     height: 1644,
-    alt: "Siva in a dark blazer, arms folded, holding a drone remote controller",
+    alt: "Shiva in a dark blazer, arms folded, holding a drone remote controller",
   },
   operations: {
     src: "/images/portraits/operations.webp",
     width: 422,
     height: 1166,
-    alt: "Siva in a field jacket holding a camera drone ready for take-off",
+    alt: "Shiva in a field jacket holding a camera drone ready for take-off",
   },
   office: {
     src: "/images/portraits/office.webp",
     width: 380,
     height: 1210,
-    alt: "Siva in a white shirt with a full-frame camera on a shoulder strap",
+    alt: "Shiva in a white shirt with a full-frame camera on a shoulder strap",
   },
   field: {
     src: "/images/portraits/field.webp",
     width: 482,
     height: 1160,
-    alt: "Siva piloting a drone with the controller raised, watching the aircraft",
+    alt: "Shiva piloting a drone with the controller raised, watching the aircraft",
   },
   casual: {
     src: "/images/portraits/casual.webp",
     width: 410,
     height: 1132,
-    alt: "Siva in a casual overshirt holding a mirrorless camera",
+    alt: "Shiva in a casual overshirt holding a mirrorless camera",
   },
 };
 
-/** The five stages of the work, each tied to something Siva actually does. */
+/**
+ * The "field deck" that stands to the right of the portrait on the About stage: what a shoot
+ * produces, the readouts behind it, and the kit that goes in the bag. Written to be read in one
+ * glance, top to bottom.
+ */
+export const workDeck = {
+  label: "Field notes",
+  title: "What I shoot",
+  services: [
+    { id: "films", title: "Aerial films", text: "Reveals, orbits, tracks" },
+    { id: "stills", title: "Aerial stills", text: "Print, listing, ad frames" },
+    { id: "mapping", title: "Mapping", text: "Orthomosaics, 3D models" },
+    { id: "progress", title: "Site progress", text: "One view, each month" },
+  ] as const,
+  note: {
+    hand: "Book 10 days ahead",
+    fine: "Nov–Feb · 6.10–7.40 am",
+  },
+  hud: {
+    label: "Last flight",
+    rec: "REC 12:48",
+    caption: "Hotel roof, Gorakhpur — golden hour",
+    readouts: [
+      { id: "alt", label: "ALT", value: "92", unit: "m" },
+      { id: "sat", label: "SAT", value: "21", unit: "" },
+      { id: "iso", label: "ISO", value: "100", unit: "" },
+      { id: "wind", label: "WIND", value: "6", unit: "kt" },
+    ],
+    /* link and battery strength, out of four bars */
+    bars: [
+      { id: "link", label: "Link", value: 3 },
+      { id: "battery", label: "Battery", value: 4 },
+    ],
+  },
+} as const;
+
+/** The five stages of the work, each tied to something Shiva actually does. */
 export const domains: Domain[] = [
   {
     id: "plan",
@@ -136,7 +172,7 @@ export const whyChooseMe = {
 export const aboutCopy = {
   headline: ["Flying the frame.", "Telling your story."],
   lead:
-    "I'm Siva, a drone photographer and camera specialist based in Gorakhpur. I shoot aerial films and stills for brands, builders, hotels, farmland and events — and I look after every camera and drone that makes them.",
+    "I'm Shiva, a drone photographer and camera specialist based in Gorakhpur. I shoot aerial films and stills for brands, builders, hotels, farmland and events — and I look after every camera and drone that makes them.",
   body:
     "My work sits where flying skill meets camera craft: planning a shot around the light and the airspace, flying it smoothly, then grading and cutting it into something a client can actually use. I fly permitted missions over Uttar Pradesh and Bihar, keep the gear serviced and colour-managed, and deliver stills, aerial films and vertical cutdowns with the usage rights in writing.",
   facts: [

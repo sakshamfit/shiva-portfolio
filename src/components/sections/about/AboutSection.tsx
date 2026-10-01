@@ -9,6 +9,7 @@ import { ArrowDown } from "@phosphor-icons/react/dist/ssr/ArrowDown";
 import { aboutCopy, domains, portraits, type Domain } from "@/content/about";
 import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
+import { WorkDeck } from "./WorkDeck";
 import styles from "./about.module.css";
 
 const icons = {
@@ -143,7 +144,7 @@ export function AboutSection() {
         {/* centre: the big name with the main portrait standing in front of it */}
         <div className={styles.hero}>
           <p aria-hidden className={styles.bigName} data-reveal="scale" style={{ ["--d" as string]: "200ms", ["--rs" as string]: "1.02", ["--dur" as string]: "800ms" }}>
-            Siva
+            {site.name}
           </p>
           <Figure
             id="suit"
@@ -154,6 +155,9 @@ export function AboutSection() {
           />
           <Callout domain={byId.deliver} delay={980} />
         </div>
+
+        {/* right of the portrait: what the work produces, in two pinned sheets */}
+        <WorkDeck />
 
         <div className={styles.rail} role="list" aria-label="How the work is done, stage by stage">
           {sideUnits.map((id, i) => {

@@ -1,7 +1,7 @@
 /**
- * Professional experience for Siva.
+ * Professional experience for Shiva.
  *
- * TODO: these two roles are written as placeholders in Siva's own field — replace the
+ * TODO: these two roles are written as placeholders in Shiva's own field — replace the
  * company names, dates, numbers and bullets with the real history before launch.
  */
 

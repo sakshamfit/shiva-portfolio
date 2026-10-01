@@ -82,7 +82,7 @@ export function ResumeSection() {
             <div className={styles.portrait} data-reveal="fade" style={{ ["--d" as string]: "220ms" }}>
               <Image
                 src="/images/portraits/resume.webp"
-                alt="Siva in a dark blazer, arms folded, holding a drone controller"
+                alt="Shiva in a dark blazer, arms folded, holding a drone controller"
                 width={1128}
                 height={1272}
                 sizes="(min-width: 1024px) 34vw, 80vw"

@@ -1,5 +1,5 @@
 // Visual QA (dev only): first-screen and full-page captures for each route.
-// Usage: node scripts/qa/pages.mjs --vp desktop --out <dir> [--full true] [--pages /,/about]
+// Usage: node scripts/qa/pages.mjs --vp desktop --out <dir> [--full true] [--pages /,/experience]
 import puppeteer from "puppeteer-core";
 
 // Point CHROME_PATH at any Chrome/Chromium build (headless shells included); the default suits Windows.
@@ -17,7 +17,7 @@ const vps = {
   tablet: { width: 820, height: 1180, deviceScaleFactor: 1, isMobile: true, hasTouch: true },
 };
 const vp = vps[arg("vp", "desktop")];
-const pages = arg("pages", "/,/about,/experience,/projects,/projects/aerial-films,/projects/aerial-mapping,/projects/kit-management,/projects/progress-documentation,/skills,/education,/contact,/resume").split(",");
+const pages = arg("pages", "/,/experience,/projects,/projects/aerial-films,/projects/aerial-mapping,/projects/kit-management,/projects/progress-documentation,/skills,/education,/contact,/resume").split(",");
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 mkdirSync(out, { recursive: true });
 

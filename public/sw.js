@@ -7,12 +7,12 @@
  *    scripts and the image sizes this screen actually uses, so the whole site works offline.
  * Anything cross-origin (Instagram, YouTube ...), non-GET, or /api/* goes straight to the network. */
 
-const V = "v1";
+const V = "v2";
 const PAGES = `pages-${V}`;
 const STATIC = `static-${V}`;
 const MEDIA = `media-${V}`;
 const KEEP = [PAGES, STATIC, MEDIA];
-const SEED = ["/", "/about", "/experience", "/projects", "/skills", "/education", "/contact", "/resume"];
+const SEED = ["/", "/experience", "/projects", "/skills", "/education", "/contact", "/resume"];
 const NETWORK_TIMEOUT = 3000;
 const MAX_PAGES = 40;
 
@@ -209,5 +209,5 @@ async function warm({ width = 828 }) {
   };
   await save(statics, assets);
   await save(media, images);
-  await save(media, ["/resume/Siva-Drone-Photographer-CV.pdf"], 1);
+  await save(media, ["/resume/Shiva-Drone-Photographer-CV.pdf"], 1);
 }

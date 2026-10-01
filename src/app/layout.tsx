@@ -10,7 +10,6 @@ import { SmoothCursor } from "@/components/motion/SmoothCursor";
 import { RouteEffects } from "@/components/layout/RouteEffects";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ServiceWorker } from "@/components/layout/ServiceWorker";
-import { FooterGate } from "@/components/layout/FooterGate";
 
 const inter = localFont({
   src: [{ path: "./fonts/InterVariable.woff2", weight: "100 900", style: "normal" }],
@@ -19,6 +18,14 @@ const inter = localFont({
   preload: true,
   fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
   adjustFontFallback: "Arial",
+});
+
+/** The hand-written marks on the About stage's notes sheet (from sakshamfit/prince-portfolio). */
+const hand = localFont({
+  src: [{ path: "./fonts/Hand.woff", weight: "400", style: "normal" }],
+  variable: "--font-hand",
+  display: "swap",
+  preload: false,
 });
 
 const roleLine = "Drone Photographer in Gorakhpur";
@@ -45,7 +52,7 @@ export const metadata: Metadata = {
     description: site.description,
     siteName: site.name,
     locale: "en_IN",
-    images: [{ url: "/images/ui/og.jpg", width: 1200, height: 630, alt: "Siva, drone photographer in Gorakhpur" }],
+    images: [{ url: "/images/ui/og.jpg", width: 1200, height: 630, alt: "Shiva, drone photographer in Gorakhpur" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -87,7 +94,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${hand.variable}`} suppressHydrationWarning>
       <head>
         {/* Marks JS as available before first paint, so reveal styles never hide content for no-JS visitors.
             A plain inline script runs while the HTML is parsed; next/script's beforeInteractive is queued until
@@ -108,9 +115,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <SiteHeader />
         {children}
-        <FooterGate>
-          <SiteFooter />
-        </FooterGate>
+        <SiteFooter />
         <SmoothScroll />
         <SmoothCursor />
         <RouteEffects />

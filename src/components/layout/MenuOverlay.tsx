@@ -276,7 +276,7 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
               </ul>
               {/* centred between the quick links and Close; on phones (no quick links) it sits where the header's name is */}
               <span className="type-label pointer-events-none absolute left-[var(--gutter)] text-[0.8rem] tracking-[0.22em] lg:left-1/2 lg:-translate-x-1/2">
-                Siva
+                {site.name}
               </span>
               <button
                 type="button"
