@@ -2,6 +2,9 @@
 // Usage: node scripts/qa/interactions.mjs [--url http://localhost:3000]
 import puppeteer from "puppeteer-core";
 
+// Point CHROME_PATH at any Chrome/Chromium build (headless shells included); the default suits Windows.
+const chromePath = process.env.CHROME_PATH ?? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+
 const base = (process.argv.includes("--url") ? process.argv[process.argv.indexOf("--url") + 1] : "http://localhost:3000").replace(/\/$/, "");
 const results = [];
 const check = (name, ok, detail = "") => results.push({ ok: Boolean(ok), name, detail: String(detail) });
@@ -9,7 +12,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const pages = ["/", "/about", "/experience", "/projects", "/projects/control-tower", "/projects/novexai", "/projects/inventory-optimization", "/projects/supplier-risk", "/skills", "/education", "/contact", "/resume"];
 
 const browser = await puppeteer.launch({
-  executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  executablePath: chromePath,
   headless: true,
   args: ["--hide-scrollbars", "--no-first-run"],
 });

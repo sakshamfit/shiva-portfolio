@@ -217,6 +217,37 @@
     0 0 3px #fff;
 }
 
+/* each note takes its slot around the photograph; the grid areas are set on the stage */
+.program {
+  grid-area: program;
+}
+.accreditation {
+  grid-area: accreditation;
+}
+.location {
+  grid-area: location;
+}
+.community {
+  grid-area: community;
+}
+
+@media (min-width: 64rem) {
+  .program,
+  .location {
+    align-self: start;
+    margin-top: 1.5rem;
+  }
+  .accreditation,
+  .community {
+    align-self: end;
+    margin-bottom: 5.5rem;
+  }
+  .location,
+  .community {
+    justify-self: end;
+  }
+}
+
 .program {
   grid-area: program;
 }
