@@ -1,0 +1,157 @@
+.layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.intro {
+  margin-bottom: 1.5rem;
+}
+
+.center {
+  display: none;
+}
+
+.card {
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid var(--color-line);
+  background: rgb(255 255 255 / 0.92);
+  padding: 1.15rem 1.15rem 1.25rem;
+  transition:
+    border-color 200ms,
+    box-shadow 240ms var(--ease-out-expo),
+    translate 240ms var(--ease-out-expo),
+    background-color 200ms;
+}
+
+/* master document: on hover or focus a card rises 4-6px and its border and icon strengthen */
+.card:focus-within {
+  border-color: rgb(20 95 229 / 0.55);
+  box-shadow: var(--shadow-soft);
+  translate: 0 -5px;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-color: rgb(20 95 229 / 0.55);
+    box-shadow: var(--shadow-soft);
+    translate: 0 -5px;
+  }
+}
+
+.cardOn,
+.cardOn:focus-within {
+  border-color: var(--color-blue);
+  background: #fff;
+  box-shadow: var(--shadow-lift);
+  translate: 0 -5px;
+}
+
+@media (hover: hover) {
+  .cardOn:hover {
+    border-color: var(--color-blue);
+    background: #fff;
+    box-shadow: var(--shadow-lift);
+    translate: 0 -5px;
+  }
+}
+
+.cardButton {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 1rem;
+  border-radius: 12px;
+  text-align: left;
+}
+
+.cardIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 12px;
+  background: var(--color-mist);
+  color: var(--color-ink-2);
+  transition:
+    background-color 260ms,
+    color 260ms;
+}
+
+.cardOn .cardIcon {
+  background: var(--color-blue);
+  color: #fff;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: #fff;
+  padding: 0.28rem 0.62rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--color-ink-2);
+}
+
+.cardOn .chip {
+  border-color: rgb(20 95 229 / 0.25);
+  background: var(--color-blue-100);
+  color: var(--color-navy);
+}
+
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+  .intro {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: minmax(15rem, 0.85fr) minmax(0, 1.2fr) minmax(0, 1.05fr);
+    grid-template-areas:
+      "intro flying camera"
+      "intro center cinema"
+      "intro post studio";
+    gap: 1.25rem 1.5rem;
+    align-items: start;
+  }
+
+  .intro {
+    grid-area: intro;
+    align-self: center;
+    margin: 0;
+  }
+
+  .center {
+    grid-area: center;
+    display: block;
+    border-radius: 20px;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    box-shadow: var(--shadow-float);
+    overflow: hidden;
+  }
+
+  .area-flying {
+    grid-area: flying;
+  }
+  .area-camera {
+    grid-area: camera;
+  }
+  .area-cinema {
+    grid-area: cinema;
+  }
+  .area-post {
+    grid-area: post;
+  }
+  .area-studio {
+    grid-area: studio;
+  }
+}

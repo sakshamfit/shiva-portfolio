@@ -1,0 +1,492 @@
+/* ---------------------------------------------------------------------------
+   Experience landing (supplied reference). Narrow screens: headline, then a
+   crop of the photo, then the role line and action. Wide landscape screens:
+   the photo covers the screen and every layer is placed in the photo's own
+   1280 x 720 coordinates (--fw/--fh/--fx/--fy), so the headline always sits on
+   the white just above the blue band, as in the reference.
+   ------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  background: #fff;
+  padding-top: calc(var(--header-h) + 2.25rem);
+}
+
+/* narrow screens: headline first, then the photo with the role line over its lower edge */
+.copy {
+  grid-row: 1;
+}
+
+.frameBox,
+.meta {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.frameBox {
+  position: relative;
+  margin-top: 0.75rem;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 430;
+  overflow: hidden;
+}
+
+.photo {
+  position: absolute;
+  inset: -58% 0 0 0; /* narrow screens: the white upper half of the photo sits above the crop */
+}
+
+.photoImg {
+  object-fit: cover;
+  object-position: 64% 100%;
+}
+
+.rings {
+  display: none;
+}
+
+.rings circle {
+  stroke: rgb(143 182 245 / 0.7);
+  stroke-width: 1.3;
+  vector-effect: non-scaling-stroke;
+}
+
+.metaShade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 62%;
+  background: linear-gradient(0deg, rgb(6 18 40 / 0.82), rgb(6 18 40 / 0.45) 55%, transparent);
+  pointer-events: none;
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  padding-inline: var(--gutter);
+}
+
+.headline {
+  position: relative;
+  margin: 0;
+  font-size: clamp(2rem, 7.3vw, 4.4rem);
+  font-weight: 820;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+}
+
+.lines {
+  display: inline-grid;
+  transform: rotate(-7deg);
+  transform-origin: 0% 100%;
+  padding-top: 0.5em;
+}
+
+.line {
+  display: block;
+  white-space: nowrap;
+}
+
+.indent {
+  padding-left: 2.6em;
+}
+
+.blue {
+  color: var(--color-blue);
+}
+
+.spark {
+  position: absolute;
+  left: calc(var(--gutter) - 0.55em);
+  top: -0.05em;
+  width: 0.62em;
+  height: 0.62em;
+  font-size: clamp(2rem, 7.3vw, 4.4rem);
+  transform: rotate(-7deg);
+}
+
+.spark path {
+  stroke: var(--color-ink);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.swoosh {
+  position: absolute;
+  left: calc(var(--gutter) + 3.75em);
+  top: 3.62em;
+  width: 4.6em;
+  height: 0.62em;
+  font-size: clamp(2rem, 7.3vw, 4.4rem);
+  transform: rotate(-3deg);
+  transform-origin: 0% 50%;
+}
+
+.swoosh svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: var(--color-ink);
+}
+
+/* Stacked layout (phones, tablets, tall screens): a larger slanted headline that fills the width, turned
+   about its top-left corner so the tilt never pushes the first line past the margin. */
+@media not all and (min-width: 64rem) and (min-aspect-ratio: 5/4) {
+  .headline,
+  .spark,
+  .swoosh {
+    /* the longest line ("Turning Supply Chain", ~9.4em) keeps a gutter's clearance at every phone width */
+    font-size: clamp(1.9rem, 9vw, 4.4rem);
+  }
+
+  .lines {
+    transform-origin: 0% 0%;
+    margin-left: 0.18em;
+  }
+
+  .spark {
+    left: calc(var(--gutter) - 0.22em);
+    top: 0.02em;
+  }
+
+  .swoosh {
+    left: calc(var(--gutter) + 4.35em);
+    top: 3.62em;
+  }
+}
+
+.meta {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  padding: 0 var(--gutter) 1.75rem;
+}
+
+.metaRole {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.75rem;
+  font-size: 0.98rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.metaPart {
+  flex-basis: 100%;
+}
+
+@media (min-width: 40rem) {
+  .metaPart {
+    flex-basis: auto;
+  }
+}
+
+.metaBar {
+  display: none;
+  width: 1.5px;
+  height: 1.05em;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+@media (min-width: 40rem) {
+  .metaBar {
+    display: inline-block;
+  }
+}
+
+.metaAreas {
+  margin-top: 0.45rem;
+  font-size: 0.92rem;
+  color: rgb(255 255 255 / 0.88);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  margin-top: 1.15rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--color-blue);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 18px 40px -18px rgb(2 8 23 / 0.6);
+  transition:
+    background-color 220ms var(--ease-out-expo),
+    color 220ms var(--ease-out-expo),
+    transform 220ms var(--ease-out-expo);
+}
+
+.cta:focus-visible {
+  background: var(--color-blue);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+@media (hover: hover) {
+  .cta:hover {
+    background: var(--color-blue);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+}
+
+.ctaArrow {
+  transition: transform 240ms var(--ease-out-expo);
+}
+
+.cta:focus-visible .ctaArrow {
+  transform: translateX(4px);
+}
+
+@media (hover: hover) {
+  .cta:hover .ctaArrow {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Wide landscape screens: the reference composition
+   ------------------------------------------------------------------------- */
+@media (min-width: 64rem) and (min-aspect-ratio: 5/4) {
+  .hero {
+    display: block;
+    height: max(100svh, 40rem);
+    padding-top: 0;
+    container-type: size;
+  }
+
+  .frameBox,
+  .copy,
+  .meta {
+    --fw: max(100cqw, 177.78cqh);
+    --fh: calc(var(--fw) * 0.5625);
+    --fx: calc((100cqw - var(--fw)) / 2);
+    --fy: calc((100cqh - var(--fh)) / 2);
+  }
+
+  .frameBox {
+    position: absolute;
+    left: var(--fx);
+    top: var(--fy);
+    width: var(--fw);
+    height: var(--fh);
+    margin: 0;
+  }
+
+  .frame {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+
+  .photo {
+    inset: 0;
+  }
+
+  .photoImg {
+    object-position: 50% 50%;
+  }
+
+  .rings {
+    display: block;
+    position: absolute;
+    left: 2.3%;
+    top: 38.2%;
+    width: 25%;
+    aspect-ratio: 1;
+    overflow: visible;
+  }
+
+  .metaShade {
+    position: absolute;
+    left: 0;
+    right: auto;
+    top: auto;
+    bottom: 0;
+    width: 60%;
+    height: 42%;
+    background: radial-gradient(120% 100% at 0% 100%, rgb(6 18 40 / 0.72), rgb(6 18 40 / 0.35) 45%, transparent 75%);
+    pointer-events: none;
+  }
+
+  .copy {
+    position: absolute;
+    left: calc(var(--fx) + var(--fw) * 0.222);
+    top: calc(var(--fy) + var(--fh) * 0.105);
+    padding: 0;
+  }
+
+  .headline,
+  .spark,
+  .swoosh {
+    font-size: clamp(3.4rem, calc(var(--fw) * 0.0555), 7.6rem);
+  }
+
+  .lines {
+    transform: rotate(-8deg);
+  }
+
+  .spark {
+    left: -0.62em;
+    top: 0.12em;
+    transform: rotate(-8deg);
+  }
+
+  .swoosh {
+    left: 3.75em;
+    top: 3.62em;
+    width: 5.6em;
+    height: 0.62em;
+    transform: rotate(-3deg);
+  }
+
+  .meta {
+    position: absolute;
+    left: max(var(--gutter), calc(var(--fx) + var(--fw) * 0.0375));
+    bottom: max(1.75rem, calc(100cqh - (var(--fy) + var(--fh) * 0.958)));
+    padding: 0;
+  }
+
+  .metaRole {
+    color: #fff;
+    font-size: clamp(0.95rem, calc(var(--fw) * 0.0118), 1.2rem);
+  }
+
+  .metaAreas {
+    color: rgb(255 255 255 / 0.88);
+    font-size: clamp(0.9rem, calc(var(--fw) * 0.0112), 1.12rem);
+  }
+
+  .cta {
+    margin-top: 1.15rem;
+    background: #fff;
+    color: var(--color-blue);
+    box-shadow: 0 18px 40px -18px rgb(2 8 23 / 0.6);
+  }
+
+  .cta:focus-visible {
+    background: var(--color-blue);
+    color: #fff;
+  }
+
+  @media (hover: hover) {
+    .cta:hover {
+      background: var(--color-blue);
+      color: #fff;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance (master document, Experience hero): the image rises from the bottom,
+   the rings and marks draw, the headline enters right to left, then the role
+   line and the action. Without JavaScript everything is simply shown.
+   ------------------------------------------------------------------------- */
+:global(.js) .frame[data-reveal] .photo {
+  clip-path: inset(100% 0 0 0);
+  transform: translate3d(0, 3%, 0);
+  transition:
+    clip-path 1200ms var(--ease-out-expo),
+    transform 1400ms var(--ease-out-expo);
+}
+
+:global(.js) .frame[data-reveal]:global(.is-in) .photo {
+  clip-path: inset(0 0 0 0);
+  transform: none;
+}
+
+:global(.js) .copy[data-reveal] .line {
+  opacity: 0;
+  transform: translate3d(36px, 0, 0);
+  transition:
+    opacity 700ms var(--ease-out-expo),
+    transform 700ms var(--ease-out-expo);
+  transition-delay: calc(900ms + var(--i, 0) * 100ms);
+}
+
+:global(.js) .copy[data-reveal]:global(.is-in) .line {
+  opacity: 1;
+  transform: none;
+}
+
+:global(.js) .copy[data-reveal] .spark path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 380ms var(--ease-out-expo);
+}
+
+:global(.js) .copy[data-reveal] .spark path:nth-child(1) {
+  transition-delay: 1300ms;
+}
+:global(.js) .copy[data-reveal] .spark path:nth-child(2) {
+  transition-delay: 1380ms;
+}
+:global(.js) .copy[data-reveal] .spark path:nth-child(3) {
+  transition-delay: 1460ms;
+}
+
+:global(.js) .copy[data-reveal]:global(.is-in) .spark path {
+  stroke-dashoffset: 0;
+}
+
+:global(.js) .copy[data-reveal] .swoosh {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 750ms var(--ease-out-expo) 1450ms;
+}
+
+:global(.js) .copy[data-reveal]:global(.is-in) .swoosh {
+  clip-path: inset(0 0 0 0);
+}
+
+:global(.js) .meta[data-reveal] > * {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 650ms var(--ease-out-expo),
+    transform 700ms var(--ease-out-expo);
+}
+
+:global(.js) .meta[data-reveal] > :nth-child(1) {
+  transition-delay: 1350ms;
+}
+:global(.js) .meta[data-reveal] > :nth-child(2) {
+  transition-delay: 1430ms;
+}
+:global(.js) .meta[data-reveal] > :nth-child(3) {
+  transition-delay: 1520ms;
+}
+
+:global(.js) .meta[data-reveal]:global(.is-in) > * {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(.js) .frame[data-reveal] .photo,
+  :global(.js) .copy[data-reveal] .line,
+  :global(.js) .meta[data-reveal] > * {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  :global(.js) .copy[data-reveal] .swoosh {
+    clip-path: none !important;
+  }
+  :global(.js) .copy[data-reveal] .spark path {
+    stroke-dashoffset: 0 !important;
+  }
+}
