@@ -123,8 +123,8 @@ export function EducationSection() {
           <dl className={styles.bar} data-reveal="rise" style={v({ "--d": "1150ms" })}>
             {[
               { Icon: CalendarBlank, label: "Duration", value: `${msc.start} to ${msc.end}` },
-              { Icon: Bank, label: "Business school", value: "MBS" },
-              { Icon: BookOpen, label: "Program", value: "DESSMO" },
+              { Icon: Bank, label: "Training partner", value: "DGCA-approved school" },
+              { Icon: BookOpen, label: "Program", value: "Remote Pilot Certificate" },
             ].map((f) => (
               <div key={f.label} className="flex items-center gap-4 px-5 py-4 sm:px-6 sm:py-5">
                 <span className="grid size-12 shrink-0 place-items-center rounded-full bg-blue-100/70 text-blue">
