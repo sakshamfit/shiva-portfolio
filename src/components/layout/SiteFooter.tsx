@@ -48,6 +48,10 @@ export function SiteFooter() {
         {/* phones and tablets: the invitation, then portrait and case side by side; wide: all three in a row */}
         <div className="shell relative grid grid-cols-2 items-end gap-x-4 gap-y-10 pt-20 md:grid-cols-12 md:gap-6 md:pt-24">
           <div className="relative order-2 w-full max-w-[15rem] justify-self-center md:col-span-6 md:max-w-[19rem] lg:order-1 lg:col-span-3" data-reveal="rise">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute bottom-[0.4%] left-[18%] right-[18%] z-0 h-[1.6%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgb(16_24_40/0.22),transparent_70%)] blur-[2px]"
+            />
             <Image
               src="/images/portraits/shirt.webp"
               alt="Shiva in a light button-down shirt, holding a drone controller"
@@ -55,7 +59,7 @@ export function SiteFooter() {
               height={1681}
               sizes="(min-width: 768px) 19rem, 45vw"
               quality={85}
-              className="h-auto w-full"
+              className="relative z-[1] h-auto w-full"
             />
           </div>
           <div className="order-1 col-span-2 pb-4 md:col-span-12 lg:order-2 lg:col-span-6 lg:pb-24">

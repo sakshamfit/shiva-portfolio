@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // the review preview is served from a proxied host, not localhost
+  allowedDevOrigins: ["*.e2b.app"],
   // the floating development badge could be mistaken for part of the design during review
   devIndicators: false,
   images: {
