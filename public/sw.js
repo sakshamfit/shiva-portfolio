@@ -7,7 +7,7 @@
  *    scripts and the image sizes this screen actually uses, so the whole site works offline.
  * Anything cross-origin (Instagram, YouTube ...), non-GET, or /api/* goes straight to the network. */
 
-const V = "v2";
+const V = "v3";
 const PAGES = `pages-${V}`;
 const STATIC = `static-${V}`;
 const MEDIA = `media-${V}`;

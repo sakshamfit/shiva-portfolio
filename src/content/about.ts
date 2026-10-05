@@ -2,8 +2,9 @@
  * About section content for Shiva.
  *
  * The five "links of the chain" become the five stages of a shoot: plan, fly, frame, post, deliver.
- * TODO: the portrait photographs are AI-generated placeholders — replace the files in
- * /public/images/portraits with Shiva's own pictures (keep the file names).
+ * Portrait files are cutouts: transparent WebP, same canvas as the original frame.
+ * TODO: these photographs are AI-generated placeholders — replace the files in
+ * /public/images/portraits with Shiva's own pictures (keep the file names and the alpha channel).
  */
 
 export type PortraitId = "operations" | "office" | "suit" | "field" | "casual";
